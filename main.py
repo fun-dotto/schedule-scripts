@@ -37,7 +37,7 @@ class Supple(TypedDict):
     roomId: int
 
 
-class ClassroomExchange(TypedDict):
+class RoomChange(TypedDict):
     lessonId: int
     date: date
     period: int
@@ -68,7 +68,7 @@ def supple_to_dict(s: Supple) -> dict:
     return {**s, "date": s["date"].isoformat()}
 
 
-def classroom_exchange_to_dict(c: ClassroomExchange) -> dict:
+def room_change_to_dict(c: RoomChange) -> dict:
     return {**c, "date": c["date"].isoformat()}
 
 
@@ -224,9 +224,9 @@ def get_sup_lesson(table_rows) -> list[Supple]:
     return supplemental
 
 
-def get_classroom_exchange(table_rows) -> list[ClassroomExchange]:
+def get_room_changes(table_rows) -> list[RoomChange]:
     """MainContent_MainContent_ClassroomExchangedLectureGridView 相当（移動元・移動先列）。"""
-    out: list[ClassroomExchange] = []
+    out: list[RoomChange] = []
     today = date.today()
     d_format = "%m/%d"
     for row in table_rows:
@@ -265,7 +265,7 @@ def get_classroom_exchange(table_rows) -> list[ClassroomExchange]:
     return out
 
 
-def fetch_cancel_supple() -> tuple[list[Kyukou], list[Supple], list[ClassroomExchange]]:
+def fetch_cancel_supple() -> tuple[list[Kyukou], list[Supple], list[RoomChange]]:
     if not USERNAME or not PASSWORD:
         raise RuntimeError("環境変数 USER_ID / USER_PASSWORD を設定してください")
     session = login_session()
@@ -280,7 +280,7 @@ def fetch_cancel_supple() -> tuple[list[Kyukou], list[Supple], list[ClassroomExc
     return (
         get_kyukou(table_rows),
         get_sup_lesson(table_rows),
-        get_classroom_exchange(table_rows),
+        get_room_changes(table_rows),
     )
 
 
@@ -288,17 +288,17 @@ def main() -> None:
     kyukou_list, supple_list, exchange_list = fetch_cancel_supple()
     kyukou_json = [kyukou_to_dict(k) for k in kyukou_list]
     supple_json = [supple_to_dict(s) for s in supple_list]
-    exchange_json = [classroom_exchange_to_dict(c) for c in exchange_list]
+    exchange_json = [room_change_to_dict(c) for c in exchange_list]
     with open("cancel_lecture.json", "w", encoding="utf-8") as f:
         json.dump(kyukou_json, f, ensure_ascii=False, indent=2)
     with open("sup_lecture.json", "w", encoding="utf-8") as f:
         json.dump(supple_json, f, ensure_ascii=False, indent=2)
-    with open("classroom_exchange_lecture.json", "w", encoding="utf-8") as f:
+    with open("room_change.json", "w", encoding="utf-8") as f:
         json.dump(exchange_json, f, ensure_ascii=False, indent=2)
     print(f"休講 {len(kyukou_json)} 件 → cancel_lecture.json")
     print(f"補講 {len(supple_json)} 件 → sup_lecture.json")
     print(
-        f"教室移動 {len(exchange_json)} 件 → classroom_exchange_lecture.json"
+        f"部屋変更 {len(exchange_json)} 件 → room_change_lecture.json"
     )
 
 
