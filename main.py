@@ -1,305 +1,50 @@
 import json
-import os
-import time
-from datetime import date, datetime
-from typing import TypedDict
+from pathlib import Path
 
-import requests
-from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
+from lesson_ids import default_classification_csv_path, fill_lesson_ids_in_records
+from scrapers.fetch import fetch_cancel_supple
+from scrapers.cancel_classes import cancelled_classes_to_dict
+from scrapers.room_change import room_change_to_dict
+from scrapers.makeup_classes import makeup_classes_to_dict
+
 load_dotenv(override=False)
-USERNAME = os.environ.get("USER_ID")
-PASSWORD = os.environ.get("USER_PASSWORD")
-YEAR = 2026
 
-
-class Kyukou(TypedDict):
-    lessonId: int
-    date: date
-    period: int
-    lessonName: str
-    campus: str
-    staff: str
-    comment: str
-    type: str
-
-
-class Supple(TypedDict):
-    lessonId: int
-    date: date
-    period: int
-    lessonName: str
-    campus: str
-    staff: str
-    comment: str
-    roomName: str
-    roomId: int
-
-
-class RoomChange(TypedDict):
-    lessonId: int
-    date: date
-    period: int
-    lessonName: str
-    campus: str
-    staff: str
-    roomFrom: str
-    roomTo: str
-
-
-def nendo_start() -> date:
-    return date(YEAR, 4, 1)
-
-
-def nendo_end() -> date:
-    return date(YEAR + 1, 3, 31)
-
-
-def _add_years(d: date, delta: int) -> date:
-    return date(d.year + delta, d.month, d.day)
-
-
-def kyukou_to_dict(k: Kyukou) -> dict:
-    return {**k, "date": k["date"].isoformat()}
-
-
-def supple_to_dict(s: Supple) -> dict:
-    return {**s, "date": s["date"].isoformat()}
-
-
-def room_change_to_dict(c: RoomChange) -> dict:
-    return {**c, "date": c["date"].isoformat()}
-
-
-def login_session() -> requests.Session:
-    session = requests.Session()
-    payload = {
-        "__LASTFOCUS": "",
-        "__EVENTTARGET": "",
-        "__EVENTARGUMENT": "",
-        "__SCROLLPOSITIONX": 0,
-        "__SCROLLPOSITIONY": 0,
-        "ctl00$MainContent$TargetYearList": YEAR,
-        "ctl00$MainContent$TargetTermList": 11,
-        "ctl00$MainContent$LoginId": USERNAME,
-        "ctl00$MainContent$LoginPassword": PASSWORD,
-        "ctl00$MainContent$LoginButton": "ログイン",
-    }
-    hidden = ["__VIEWSTATE", "__VIEWSTATEGENERATOR", "__EVENTVALIDATION"]
-    r = session.get("https://students.fun.ac.jp/Login", timeout=30)
-    r.raise_for_status()
-    bs = BeautifulSoup(r.text, "html.parser")
-    for name in hidden:
-        el = bs.find(attrs={"name": name})
-        if el and el.get("value") is not None:
-            payload[name] = el["value"]
-    r = session.post("https://students.fun.ac.jp/Login", data=payload, timeout=30)
-    r.raise_for_status()
-    time.sleep(2)
-    return session
-
-
-def get_kyukou(table_rows) -> list[Kyukou]:
-    kyukou_lessons: list[Kyukou] = []
-    for row in table_rows:
-        date_td = row.find("td", {"data-col-responsive-title": "日付"})
-        day = row.find("td", {"data-col-responsive-title": "曜日"})
-        period = row.find("td", {"data-col-responsive-title": "時限"})
-        lecture_name = row.find("td", {"data-col-responsive-title": "授業名"})
-        campus = row.find("td", {"data-col-responsive-title": "キャンパス"})
-        instructor = row.find("td", {"data-col-responsive-title": "代表教職員"})
-        cancellation_comment = row.find(
-            "td", {"data-col-responsive-title": "休講コメント"}
-        )
-        today = date.today()
-        d_format = "%m/%d"
-
-        if all(
-            [date_td, day, period, lecture_name, campus, instructor, cancellation_comment]
-        ):
-            cancel_comment = cancellation_comment.text.strip()
-            kind = "その他"
-            if cancel_comment.startswith("補講あり"):
-                kind = "補講あり"
-            elif cancel_comment.startswith("補講なし"):
-                kind = "補講なし"
-            elif cancel_comment.startswith("補講未定"):
-                kind = "補講未定"
-            dt = date_td.text.strip()
-            s_dt = datetime.strptime(dt, d_format).date()
-            new_date = date(year=today.year, month=s_dt.month, day=s_dt.day)
-            if new_date < nendo_start():
-                new_date = _add_years(new_date, 1)
-            if new_date > nendo_end():
-                new_date = _add_years(new_date, -1)
-            kyukou_lessons.append(
-                {
-                    "lessonId": 0,
-                    "date": new_date,
-                    "period": int(period.text.strip()[0]),
-                    "lessonName": lecture_name.text.strip(),
-                    "campus": campus.text.strip(),
-                    "staff": instructor.text.strip(),
-                    "comment": cancel_comment,
-                    "type": kind,
-                }
-            )
-    return kyukou_lessons
-
-
-def get_sup_lesson(table_rows) -> list[Supple]:
-    supplemental: list[Supple] = []
-    room_name_to_id = {
-        "アトリエ": "50",
-        "363": "16",
-        "364": "17",
-        "365": "18",
-        "体育館": "51",
-        "大講義室": "2",
-        "483": "19",
-        "484": "10",
-        "493": "3",
-        "494C&D": "8",
-        "495C&D": "9",
-        "講堂": "1",
-        "583": "11",
-        "584": "12",
-        "585": "13",
-        "593": "4",
-        "594": "5",
-        "595": "6",
-        "R781": "14",
-        "R782": "15",
-        "R791": "7",
-    }
-    for row in table_rows:
-        date_td = row.find("td", {"data-col-responsive-title": "日付"})
-        day = row.find("td", {"data-col-responsive-title": "曜日"})
-        period = row.find("td", {"data-col-responsive-title": "時限"})
-        lecture_name = row.find("td", {"data-col-responsive-title": "授業名"})
-        campus = row.find("td", {"data-col-responsive-title": "キャンパス"})
-        room_td = row.find("td", {"data-col-responsive-title": "教室名"})
-        instructor = row.find("td", {"data-col-responsive-title": "代表教職員"})
-        supplement_comment = row.find(
-            "td", {"data-col-responsive-title": "補講コメント"}
-        )
-        today = date.today()
-        d_format = "%m/%d"
-
-        if all(
-            [
-                date_td,
-                day,
-                period,
-                lecture_name,
-                campus,
-                room_td,
-                instructor,
-                supplement_comment,
-            ]
-        ):
-            dt = date_td.text.strip()
-            s_dt = datetime.strptime(dt, d_format).date()
-            new_date = date(year=today.year, month=s_dt.month, day=s_dt.day)
-            if new_date < nendo_start():
-                new_date = _add_years(new_date, 1)
-            if new_date > nendo_end():
-                new_date = _add_years(new_date, -1)
-            room_name = room_td.text.strip()
-            room_id = int(room_name_to_id[room_name]) if room_name in room_name_to_id else 0
-            supplemental.append(
-                {
-                    "lessonId": 0,
-                    "date": new_date,
-                    "period": int(period.text.strip()[0]),
-                    "lessonName": lecture_name.text.strip(),
-                    "campus": campus.text.strip(),
-                    "staff": instructor.text.strip(),
-                    "comment": supplement_comment.text.strip(),
-                    "roomName": room_name,
-                    "roomId": room_id,
-                }
-            )
-    return supplemental
-
-
-def get_room_changes(table_rows) -> list[RoomChange]:
-    """MainContent_MainContent_ClassroomExchangedLectureGridView 相当（移動元・移動先列）。"""
-    out: list[RoomChange] = []
-    today = date.today()
-    d_format = "%m/%d"
-    for row in table_rows:
-        date_td = row.find("td", {"data-col-responsive-title": "日付"})
-        period = row.find("td", {"data-col-responsive-title": "時限"})
-        lecture_name = row.find("td", {"data-col-responsive-title": "授業名"})
-        campus = row.find("td", {"data-col-responsive-title": "キャンパス"})
-        instructor = row.find("td", {"data-col-responsive-title": "代表教職員"})
-        from_td = row.find("td", {"data-col-responsive-title": "移動元"})
-        to_td = row.find("td", {"data-col-responsive-title": "移動先"})
-        if not all(
-            [date_td, period, lecture_name, campus, instructor, from_td, to_td]
-        ):
-            continue
-        dt = date_td.text.strip()
-        s_dt = datetime.strptime(dt, d_format).date()
-        new_date = date(year=today.year, month=s_dt.month, day=s_dt.day)
-        if new_date < nendo_start():
-            new_date = _add_years(new_date, 1)
-        if new_date > nendo_end():
-            new_date = _add_years(new_date, -1)
-        room_from = from_td.text.strip()
-        room_to = to_td.text.strip()
-        out.append(
-            {
-                "lessonId": 0,
-                "date": new_date,
-                "period": int(period.text.strip()[0]),
-                "lessonName": lecture_name.text.strip(),
-                "campus": campus.text.strip(),
-                "staff": instructor.text.strip(),
-                "roomFrom": room_from,
-                "roomTo": room_to,
-            }
-        )
-    return out
-
-
-def fetch_cancel_supple() -> tuple[list[Kyukou], list[Supple], list[RoomChange]]:
-    if not USERNAME or not PASSWORD:
-        raise RuntimeError("環境変数 USER_ID / USER_PASSWORD を設定してください")
-    session = login_session()
-    try:
-        r = session.get("https://students.fun.ac.jp/Pt/CSLecture", timeout=30)
-        r.raise_for_status()
-        bs = BeautifulSoup(r.text, "html.parser")
-        table_rows = bs.find_all("tr")
-    finally:
-        session.close()
-
-    return (
-        get_kyukou(table_rows),
-        get_sup_lesson(table_rows),
-        get_room_changes(table_rows),
-    )
+ROOT = Path(__file__).resolve().parent
 
 
 def main() -> None:
-    kyukou_list, supple_list, exchange_list = fetch_cancel_supple()
-    kyukou_json = [kyukou_to_dict(k) for k in kyukou_list]
-    supple_json = [supple_to_dict(s) for s in supple_list]
+    cancelled_classes_list, makeup_classes_list, exchange_list = fetch_cancel_supple()
+    cancelled_classes_json = [cancelled_classes_to_dict(k) for k in cancelled_classes_list]
+    makeup_classes_json = [makeup_classes_to_dict(s) for s in makeup_classes_list]
     exchange_json = [room_change_to_dict(c) for c in exchange_list]
+
+    csv_path = default_classification_csv_path(ROOT)
+    if csv_path.is_file():
+        r_k = fill_lesson_ids_in_records(cancelled_classes_json, csv_path)
+        r_s = fill_lesson_ids_in_records(makeup_classes_json, csv_path)
+        r_r = fill_lesson_ids_in_records(exchange_json, csv_path)
+        print(
+            f"lessonId 照合（{csv_path.name}） 休講: {r_k.matched}/{r_k.total} 件, "
+            f"補講: {r_s.matched}/{r_s.total} 件, "
+            f"部屋変更: {r_r.matched}/{r_r.total} 件"
+        )
+    else:
+        print(
+            f"スキップ: {csv_path.name} が無いため lessonId は 0 のまま（休講・補講・部屋変更）",
+            flush=True,
+        )
+
     with open("cancel_lecture.json", "w", encoding="utf-8") as f:
-        json.dump(kyukou_json, f, ensure_ascii=False, indent=2)
-    with open("sup_lecture.json", "w", encoding="utf-8") as f:
-        json.dump(supple_json, f, ensure_ascii=False, indent=2)
+        json.dump(cancelled_classes_json, f, ensure_ascii=False, indent=2)
+    with open("makeup_classes.json", "w", encoding="utf-8") as f:
+        json.dump(makeup_classes_json, f, ensure_ascii=False, indent=2)
     with open("room_change.json", "w", encoding="utf-8") as f:
         json.dump(exchange_json, f, ensure_ascii=False, indent=2)
-    print(f"休講 {len(kyukou_json)} 件 → cancel_lecture.json")
-    print(f"補講 {len(supple_json)} 件 → sup_lecture.json")
-    print(
-        f"部屋変更 {len(exchange_json)} 件 → room_change_lecture.json"
-    )
+    print(f"休講 {len(cancelled_classes_json)} 件 → cancel_lecture.json")
+    print(f"補講 {len(makeup_classes_json)} 件 → makeup_classes.json")
+    print(f"部屋変更 {len(exchange_json)} 件 → room_change.json")
 
 
 if __name__ == "__main__":
