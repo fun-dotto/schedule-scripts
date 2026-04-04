@@ -24,13 +24,6 @@ def _require_env(name: str) -> str:
 
 
 def get_engine():
-    """
-    Cloud SQL（PostgreSQL）に IAM 認証で接続する Engine を返す。
-
-    使用する環境変数:
-      INSTANCE_CONNECTION_NAME, DB_NAME, DB_IAM_USER
-      GOOGLE_APPLICATION_CREDENTIALS（サービスアカウント JSON のパス）
-    """
     load_dotenv(override=False)
     instance = _require_env("INSTANCE_CONNECTION_NAME")
     database = _require_env("DB_NAME")
@@ -55,7 +48,6 @@ def get_engine():
 
 
 def migrate() -> None:
-    """未作成のテーブルのみ作成する（既存テーブルは変更しない）。"""
     engine = get_engine()
     try:
         Base.metadata.create_all(engine)
@@ -65,4 +57,4 @@ def migrate() -> None:
 
 if __name__ == "__main__":
     migrate()
-    print("migrate 完了: cancel_lectures, supplement_lectures, room_changes")
+    print("migrate 完了: cancelled_classes, makeup_classes, room_changes")
