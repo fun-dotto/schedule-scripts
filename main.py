@@ -4,6 +4,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from db.engine import get_engine
+from db.room_map import fill_room_ids_in_room_changes, load_room_name_to_id_map
 from db.subject_map import fill_subject_ids_in_records, load_syllabus_to_subject_id_map
 from lesson_ids import default_classification_csv_path, fill_lesson_ids_in_records
 from scrapers.fetch import fetch_cancel_supple
@@ -53,6 +54,18 @@ def main() -> None:
             all_unmatched = sorted(set(sk.unmatched_lesson_ids + sm.unmatched_lesson_ids + sr.unmatched_lesson_ids))
             if all_unmatched:
                 print(f"警告: subjects に無い lessonId（syllabus_id）: {all_unmatched}", flush=True)
+
+            try:
+                room_map = load_room_name_to_id_map(engine)
+                rr = fill_room_ids_in_room_changes(exchange_json, room_map)
+                print(
+                    f"room_id 付与（rooms.name） 移動元: {rr.matched_from}/{rr.eligible_from} 件, "
+                    f"移動先: {rr.matched_to}/{rr.eligible_to} 件（部屋変更 {rr.total} 件）"
+                )
+                if rr.unmatched_names:
+                    print(f"警告: rooms に無い教室名: {rr.unmatched_names}", flush=True)
+            except Exception as e:
+                print(f"スキップ: room_id 付与（{e}）", flush=True)
         finally:
             engine.dispose()
     except RuntimeError as e:
