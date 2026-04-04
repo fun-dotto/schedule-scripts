@@ -1,0 +1,1042 @@
+[
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 1,
+    "lessonName": "アルゴリズムとデータ構造2-ABCD",
+    "campus": "本学",
+    "staff": "佐藤　生馬",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 3,
+    "lessonName": "ｼｽﾃﾑ情報科学におけるｱｶﾃﾞﾐｯｸﾘﾃﾗｼｰIM1,2",
+    "campus": "本学",
+    "staff": "南部　美砂子",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 4,
+    "lessonName": "バーチャル・イングリッシュ・プログラムⅠ1",
+    "campus": "本学",
+    "staff": "ＶＥＰ担当",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 5,
+    "lessonName": "バーチャル・イングリッシュ・プログラムⅢ2",
+    "campus": "本学",
+    "staff": "ＶＥＰ担当",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 2,
+    "lessonName": "解析学I1-IJKL",
+    "campus": "本学",
+    "staff": "加藤　譲",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 2,
+    "lessonName": "言語と社会1～4",
+    "campus": "本学",
+    "staff": "松本　斉子",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 3,
+    "lessonName": "情報機器概論1-IJKL",
+    "campus": "本学",
+    "staff": "白石　陽",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 2,
+    "lessonName": "情報表現基礎Ⅱ2-E",
+    "campus": "本学",
+    "staff": "長田　純一",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 2,
+    "lessonName": "情報表現基礎Ⅱ2-F",
+    "campus": "本学",
+    "staff": "島影　圭佑",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 3,
+    "lessonName": "情報表現基礎演習Ⅱ2-E",
+    "campus": "本学",
+    "staff": "長田　純一",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 3,
+    "lessonName": "情報表現基礎演習Ⅱ2-F",
+    "campus": "本学",
+    "staff": "島影　圭佑",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 2,
+    "lessonName": "数学総合演習I1-ABCD",
+    "campus": "本学",
+    "staff": "寺井　あすか",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 3,
+    "lessonName": "数値解析3-GHI",
+    "campus": "本学",
+    "staff": "加藤　譲",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 1,
+    "lessonName": "物理学入門1",
+    "campus": "本学",
+    "staff": "櫻沢　繁",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 3,
+    "lessonName": "余暇と健康Ⅱ1-GH",
+    "campus": "本学",
+    "staff": "吉村　功",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 2,
+    "lessonName": "ソフトウェア設計論3-ABCDEF（旧:ソフトウェア設計論 II）",
+    "campus": "本学",
+    "staff": "伊藤　恵",
+    "comment": "補講未定",
+    "type": "補講未定"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-06",
+    "period": 2,
+    "lessonName": "スタディスキル1-EF",
+    "campus": "本学",
+    "staff": "辻　義人",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 4,
+    "lessonName": "スタディスキル1-AB",
+    "campus": "本学",
+    "staff": "リヴァーズ　ダミアン",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 3,
+    "lessonName": "余暇と健康Ⅱ1-KL",
+    "campus": "本学",
+    "staff": "西谷　卓也",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 2,
+    "lessonName": "余暇と健康Ⅰ1～4",
+    "campus": "本学",
+    "staff": "西谷　卓也",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 2,
+    "lessonName": "数学総合演習I1-IJKL",
+    "campus": "本学",
+    "staff": "川口　聡",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 5,
+    "lessonName": "線形代数学Ⅰ1-EFGH",
+    "campus": "本学",
+    "staff": "寺沢　憲吾",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 2,
+    "lessonName": "知覚システム論3-EF",
+    "campus": "本学",
+    "staff": "伊藤　精英",
+    "comment": "補講未定",
+    "type": "補講未定"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 5,
+    "lessonName": "情報メディア社会論1～4",
+    "campus": "本学",
+    "staff": "クマレ　ハラルドミハエル",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 3,
+    "lessonName": "情報ネットワーク3-ABCD",
+    "campus": "本学",
+    "staff": "稲村　浩",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 2,
+    "lessonName": "ネットワーク通信理論3-ABCD",
+    "campus": "本学",
+    "staff": "佐藤　仁樹",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 4,
+    "lessonName": "形式言語とオートマトン2-GHI",
+    "campus": "本学",
+    "staff": "義永　那津人",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 1,
+    "lessonName": "画像認識3-ABCDEF",
+    "campus": "本学",
+    "staff": "長崎　健",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 4,
+    "lessonName": "解析学I1-EFGH",
+    "campus": "本学",
+    "staff": "田中　吉太郎",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 1,
+    "lessonName": "モデリング入門1（旧:複雑系科学トピックス2-GHI2前）",
+    "campus": "本学",
+    "staff": "齊藤　朝輝",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 2,
+    "lessonName": "コミュニケーションIII2-KL",
+    "campus": "本学",
+    "staff": "リヴァーズ　ダミアン",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 2,
+    "lessonName": "コミュニケーションIII2-GH",
+    "campus": "本学",
+    "staff": "山田　浩",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 2,
+    "lessonName": "コミュニケーションIII2-IJ",
+    "campus": "本学",
+    "staff": "イドネカッソネ　ビンセンゾウ",
+    "comment": "補講未定",
+    "type": "補講未定"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 3,
+    "lessonName": "コミュニケーションI1-A",
+    "campus": "本学",
+    "staff": "バゲンダ　ドミニク",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 3,
+    "lessonName": "コミュニケーションI1-B",
+    "campus": "本学",
+    "staff": "スミス　アダム",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 3,
+    "lessonName": "コミュニケーションI1-C",
+    "campus": "本学",
+    "staff": "ジョンソン　アンドリュー",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 3,
+    "lessonName": "コミュニケーションI1-D",
+    "campus": "本学",
+    "staff": "ルースベン－スチュアート　ピーター",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 4,
+    "lessonName": "コミュニケーションI1-I",
+    "campus": "本学",
+    "staff": "バゲンダ　ドミニク",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 4,
+    "lessonName": "コミュニケーションI1-J",
+    "campus": "本学",
+    "staff": "ジョンソン　アンドリュー",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 1,
+    "lessonName": "コミュニケーションIII2-AB",
+    "campus": "本学",
+    "staff": "リヴァーズ　ダミアン",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 1,
+    "lessonName": "コミュニケーションIII2-CD",
+    "campus": "本学",
+    "staff": "山田　浩",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-07",
+    "period": 1,
+    "lessonName": "コミュニケーションIII2-EF",
+    "campus": "本学",
+    "staff": "イドネカッソネ　ビンセンゾウ",
+    "comment": "補講未定",
+    "type": "補講未定"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 2,
+    "lessonName": "コミュニケーションI1-L",
+    "campus": "本学",
+    "staff": "ルースベン－スチュアート　ピーター",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 2,
+    "lessonName": "コミュニケーションI1-K",
+    "campus": "本学",
+    "staff": "スミス　アダム",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 3,
+    "lessonName": "コミュニケーションI1-H",
+    "campus": "本学",
+    "staff": "ルースベン－スチュアート　ピーター",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 3,
+    "lessonName": "コミュニケーションI1-E",
+    "campus": "本学",
+    "staff": "ジョンソン　アンドリュー",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 3,
+    "lessonName": "コミュニケーションI1-F",
+    "campus": "本学",
+    "staff": "スミス　アダム",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 3,
+    "lessonName": "コミュニケーションI1-G",
+    "campus": "本学",
+    "staff": "バゲンダ　ドミニク",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 1,
+    "lessonName": "システム数学基礎2-GHI",
+    "campus": "本学",
+    "staff": "川口　聡",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 1,
+    "lessonName": "ヒューマンインタフェース3-ABCD",
+    "campus": "本学",
+    "staff": "安井　重哉",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 1,
+    "lessonName": "ヒューマンインタフェース3-EFJKL",
+    "campus": "本学",
+    "staff": "安井　重哉",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 1,
+    "lessonName": "ロボットの科学技術1～4",
+    "campus": "本学",
+    "staff": "三上　貞芳",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 3,
+    "lessonName": "情報ネットワーク3-EFGHI",
+    "campus": "本学",
+    "staff": "稲村　浩",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 5,
+    "lessonName": "情報機器概論1-ABCD",
+    "campus": "本学",
+    "staff": "西澤　俊広",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 5,
+    "lessonName": "数学総合演習I1-EFGH",
+    "campus": "本学",
+    "staff": "石田　繁巳",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 3,
+    "lessonName": "情報表現入門1-IJ",
+    "campus": "本学",
+    "staff": "角　薫",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 3,
+    "lessonName": "情報表現入門1-KL",
+    "campus": "本学",
+    "staff": "角　康之",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 1,
+    "lessonName": "知能情報科学通論M1,2",
+    "campus": "本学",
+    "staff": "村井　源",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 1,
+    "lessonName": "複雑系システム特論M1,2",
+    "campus": "本学",
+    "staff": "櫻沢　繁",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 3,
+    "lessonName": "生物物理の基礎2-GHI",
+    "campus": "本学",
+    "staff": "櫻沢　繁",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 1,
+    "lessonName": "線形代数学Ⅰ1-ABCD",
+    "campus": "本学",
+    "staff": "栗川　知己",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 3,
+    "lessonName": "余暇と健康Ⅱ1-CD",
+    "campus": "本学",
+    "staff": "鈴木　利治",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 2,
+    "lessonName": "余暇と健康Ⅱ1-EF",
+    "campus": "本学",
+    "staff": "西谷　卓也",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 2,
+    "lessonName": "情報マネジメント論2-ABCDEF（旧:情報マネージメント論）",
+    "campus": "本学",
+    "staff": "石尾　隆",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 2,
+    "lessonName": "スタディスキル1-CD",
+    "campus": "本学",
+    "staff": "辻　義人",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-08",
+    "period": 4,
+    "lessonName": "スタディスキル1-GH",
+    "campus": "本学",
+    "staff": "山田　浩",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 3,
+    "lessonName": "スタディスキル1-KL",
+    "campus": "本学",
+    "staff": "イドネカッソネ　ビンセンゾウ",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 3,
+    "lessonName": "余暇と健康Ⅱ1-IJ",
+    "campus": "本学",
+    "staff": "西谷　卓也",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 2,
+    "lessonName": "余暇と健康Ⅱ1-AB",
+    "campus": "本学",
+    "staff": "鈴木　利治",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 5,
+    "lessonName": "認知科学1～4",
+    "campus": "本学",
+    "staff": "花田　光彦",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 2,
+    "lessonName": "人工知能基礎2-JKL",
+    "campus": "本学",
+    "staff": "寺井　あすか",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 1,
+    "lessonName": "情報表現入門1-EF",
+    "campus": "本学",
+    "staff": "竹川　佳成",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 1,
+    "lessonName": "情報表現入門1-GH",
+    "campus": "本学",
+    "staff": "島影　圭佑",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 3,
+    "lessonName": "科学技術リテラシ1-ABCD",
+    "campus": "本学",
+    "staff": "辻　義人",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 3,
+    "lessonName": "確率・統計学2-EFJKL",
+    "campus": "本学",
+    "staff": "姜　暁鴻",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 4,
+    "lessonName": "機械学習Ⅱ3-GHI（旧:数理情報科学 3後）",
+    "campus": "本学",
+    "staff": "島内　宏和",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 2,
+    "lessonName": "ハードウェア基礎2-ABCD",
+    "campus": "本学",
+    "staff": "石榑　康雄",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 2,
+    "lessonName": "ハードウェア基礎2-GHI",
+    "campus": "本学",
+    "staff": "白勢　政明",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 1,
+    "lessonName": "コミュニケーションI1-D",
+    "campus": "本学",
+    "staff": "ルースベン－スチュアート　ピーター",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 1,
+    "lessonName": "コミュニケーションI1-C",
+    "campus": "本学",
+    "staff": "ジョンソン　アンドリュー",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 1,
+    "lessonName": "コミュニケーションI1-B",
+    "campus": "本学",
+    "staff": "スミス　アダム",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 1,
+    "lessonName": "コミュニケーションI1-A",
+    "campus": "本学",
+    "staff": "バゲンダ　ドミニク",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 3,
+    "lessonName": "アルゴリズムとデータ構造2-GHI",
+    "campus": "本学",
+    "staff": "山田　恭史",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 4,
+    "lessonName": "オペレーティングシステム3-EFJKL",
+    "campus": "本学",
+    "staff": "松原　克弥",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 2,
+    "lessonName": "コミュニケーションI1-I",
+    "campus": "本学",
+    "staff": "バゲンダ　ドミニク",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-09",
+    "period": 2,
+    "lessonName": "コミュニケーションI1-J",
+    "campus": "本学",
+    "staff": "ジョンソン　アンドリュー",
+    "comment": "",
+    "type": "その他"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 3,
+    "lessonName": "コミュニケーションI1-K",
+    "campus": "本学",
+    "staff": "スミス　アダム",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 4,
+    "lessonName": "コミュニケーションI1-H",
+    "campus": "本学",
+    "staff": "ルースベン－スチュアート　ピーター",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 3,
+    "lessonName": "コミュニケーションI1-L",
+    "campus": "本学",
+    "staff": "ルースベン－スチュアート　ピーター",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 1,
+    "lessonName": "コミュニケーションIII2-AB",
+    "campus": "本学",
+    "staff": "リヴァーズ　ダミアン",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 1,
+    "lessonName": "コミュニケーションIII2-EF",
+    "campus": "本学",
+    "staff": "イドネカッソネ　ビンセンゾウ",
+    "comment": "補講未定",
+    "type": "補講未定"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 1,
+    "lessonName": "コミュニケーションIII2-CD",
+    "campus": "本学",
+    "staff": "山田　浩",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 4,
+    "lessonName": "コミュニケーションI1-E",
+    "campus": "本学",
+    "staff": "ジョンソン　アンドリュー",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 4,
+    "lessonName": "コミュニケーションI1-G",
+    "campus": "本学",
+    "staff": "バゲンダ　ドミニク",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 4,
+    "lessonName": "コミュニケーションI1-F",
+    "campus": "本学",
+    "staff": "スミス　アダム",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 3,
+    "lessonName": "ヒューマンインタフェース演習3-E",
+    "campus": "本学",
+    "staff": "安井　重哉",
+    "comment": "補講未定",
+    "type": "補講未定"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 3,
+    "lessonName": "ヒューマンインタフェース演習3-F",
+    "campus": "本学",
+    "staff": "竹川　佳成",
+    "comment": "補講未定",
+    "type": "補講未定"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 2,
+    "lessonName": "コミュニケーションIII2-KL",
+    "campus": "本学",
+    "staff": "リヴァーズ　ダミアン",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 2,
+    "lessonName": "コミュニケーションIII2-IJ",
+    "campus": "本学",
+    "staff": "イドネカッソネ　ビンセンゾウ",
+    "comment": "補講未定",
+    "type": "補講未定"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 2,
+    "lessonName": "コミュニケーションIII2-GH",
+    "campus": "本学",
+    "staff": "山田　浩",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 3,
+    "lessonName": "科学技術リテラシ1-EFGH",
+    "campus": "本学",
+    "staff": "南部　美砂子",
+    "comment": "補講未定",
+    "type": "補講未定"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 1,
+    "lessonName": "科学技術リテラシ1-IJKL",
+    "campus": "本学",
+    "staff": "黒田　実加",
+    "comment": "補講未定",
+    "type": "補講未定"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 1,
+    "lessonName": "情報表現入門1-AB",
+    "campus": "本学",
+    "staff": "村井　源",
+    "comment": "補講なし",
+    "type": "補講なし"
+  },
+  {
+    "lessonId": 0,
+    "date": "2026-04-10",
+    "period": 1,
+    "lessonName": "情報表現入門1-CD",
+    "campus": "本学",
+    "staff": "原田　泰",
+    "comment": "補講なし",
+    "type": "補講なし"
+  }
+]
