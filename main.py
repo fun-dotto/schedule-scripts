@@ -37,6 +37,17 @@ class Supple(TypedDict):
     roomId: int
 
 
+class ClassroomExchange(TypedDict):
+    lessonId: int
+    date: date
+    period: int
+    lessonName: str
+    campus: str
+    staff: str
+    roomFrom: str
+    roomTo: str
+
+
 def nendo_start() -> date:
     return date(YEAR, 4, 1)
 
@@ -55,6 +66,10 @@ def kyukou_to_dict(k: Kyukou) -> dict:
 
 def supple_to_dict(s: Supple) -> dict:
     return {**s, "date": s["date"].isoformat()}
+
+
+def classroom_exchange_to_dict(c: ClassroomExchange) -> dict:
+    return {**c, "date": c["date"].isoformat()}
 
 
 def login_session() -> requests.Session:
@@ -209,7 +224,48 @@ def get_sup_lesson(table_rows) -> list[Supple]:
     return supplemental
 
 
-def fetch_cancel_supple() -> tuple[list[Kyukou], list[Supple]]:
+def get_classroom_exchange(table_rows) -> list[ClassroomExchange]:
+    """MainContent_MainContent_ClassroomExchangedLectureGridView 相当（移動元・移動先列）。"""
+    out: list[ClassroomExchange] = []
+    today = date.today()
+    d_format = "%m/%d"
+    for row in table_rows:
+        date_td = row.find("td", {"data-col-responsive-title": "日付"})
+        period = row.find("td", {"data-col-responsive-title": "時限"})
+        lecture_name = row.find("td", {"data-col-responsive-title": "授業名"})
+        campus = row.find("td", {"data-col-responsive-title": "キャンパス"})
+        instructor = row.find("td", {"data-col-responsive-title": "代表教職員"})
+        from_td = row.find("td", {"data-col-responsive-title": "移動元"})
+        to_td = row.find("td", {"data-col-responsive-title": "移動先"})
+        if not all(
+            [date_td, period, lecture_name, campus, instructor, from_td, to_td]
+        ):
+            continue
+        dt = date_td.text.strip()
+        s_dt = datetime.strptime(dt, d_format).date()
+        new_date = date(year=today.year, month=s_dt.month, day=s_dt.day)
+        if new_date < nendo_start():
+            new_date = _add_years(new_date, 1)
+        if new_date > nendo_end():
+            new_date = _add_years(new_date, -1)
+        room_from = from_td.text.strip()
+        room_to = to_td.text.strip()
+        out.append(
+            {
+                "lessonId": 0,
+                "date": new_date,
+                "period": int(period.text.strip()[0]),
+                "lessonName": lecture_name.text.strip(),
+                "campus": campus.text.strip(),
+                "staff": instructor.text.strip(),
+                "roomFrom": room_from,
+                "roomTo": room_to,
+            }
+        )
+    return out
+
+
+def fetch_cancel_supple() -> tuple[list[Kyukou], list[Supple], list[ClassroomExchange]]:
     if not USERNAME or not PASSWORD:
         raise RuntimeError("環境変数 USER_ID / USER_PASSWORD を設定してください")
     session = login_session()
@@ -221,19 +277,29 @@ def fetch_cancel_supple() -> tuple[list[Kyukou], list[Supple]]:
     finally:
         session.close()
 
-    return get_kyukou(table_rows), get_sup_lesson(table_rows)
+    return (
+        get_kyukou(table_rows),
+        get_sup_lesson(table_rows),
+        get_classroom_exchange(table_rows),
+    )
 
 
 def main() -> None:
-    kyukou_list, supple_list = fetch_cancel_supple()
+    kyukou_list, supple_list, exchange_list = fetch_cancel_supple()
     kyukou_json = [kyukou_to_dict(k) for k in kyukou_list]
     supple_json = [supple_to_dict(s) for s in supple_list]
+    exchange_json = [classroom_exchange_to_dict(c) for c in exchange_list]
     with open("cancel_lecture.json", "w", encoding="utf-8") as f:
         json.dump(kyukou_json, f, ensure_ascii=False, indent=2)
     with open("sup_lecture.json", "w", encoding="utf-8") as f:
         json.dump(supple_json, f, ensure_ascii=False, indent=2)
+    with open("classroom_exchange_lecture.json", "w", encoding="utf-8") as f:
+        json.dump(exchange_json, f, ensure_ascii=False, indent=2)
     print(f"休講 {len(kyukou_json)} 件 → cancel_lecture.json")
     print(f"補講 {len(supple_json)} 件 → sup_lecture.json")
+    print(
+        f"教室移動 {len(exchange_json)} 件 → classroom_exchange_lecture.json"
+    )
 
 
 if __name__ == "__main__":
