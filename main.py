@@ -3,6 +3,8 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+from db.engine import get_engine
+from db.subject_map import fill_subject_ids_in_records, load_syllabus_to_subject_id_map
 from lesson_ids import default_classification_csv_path, fill_lesson_ids_in_records
 from scrapers.fetch import fetch_cancel_supple
 from scrapers.cancel_classes import cancelled_classes_to_dict
@@ -35,6 +37,26 @@ def main() -> None:
             f"スキップ: {csv_path.name} が無いため lessonId は 0 のまま（休講・補講・部屋変更）",
             flush=True,
         )
+
+    try:
+        engine = get_engine()
+        try:
+            syllabus_map = load_syllabus_to_subject_id_map(engine)
+            sk = fill_subject_ids_in_records(cancelled_classes_json, syllabus_map)
+            sm = fill_subject_ids_in_records(makeup_classes_json, syllabus_map)
+            sr = fill_subject_ids_in_records(exchange_json, syllabus_map)
+            print(
+                f"subject_id 付与（subjects.syllabus_id） 休講: {sk.matched}/{sk.eligible} 件（全 {sk.total}）, "
+                f"補講: {sm.matched}/{sm.eligible} 件（全 {sm.total}）, "
+                f"部屋変更: {sr.matched}/{sr.eligible} 件（全 {sr.total}）"
+            )
+            all_unmatched = sorted(set(sk.unmatched_lesson_ids + sm.unmatched_lesson_ids + sr.unmatched_lesson_ids))
+            if all_unmatched:
+                print(f"警告: subjects に無い lessonId（syllabus_id）: {all_unmatched}", flush=True)
+        finally:
+            engine.dispose()
+    except RuntimeError as e:
+        print(f"スキップ: subject_id 付与（{e}）", flush=True)
 
     with open("cancel_lecture.json", "w", encoding="utf-8") as f:
         json.dump(cancelled_classes_json, f, ensure_ascii=False, indent=2)
