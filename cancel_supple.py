@@ -1,4 +1,3 @@
-import csv
 import json
 import os
 import time
@@ -7,10 +6,12 @@ from typing import TypedDict
 
 import requests
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
 
+load_dotenv(override=False)
 USERNAME = os.environ.get("USER_ID")
 PASSWORD = os.environ.get("USER_PASSWORD")
-YEAR = 2025
+YEAR = 2026
 
 
 class Kyukou(TypedDict):
@@ -46,21 +47,6 @@ def nendo_end() -> date:
 
 def _add_years(d: date, delta: int) -> date:
     return date(d.year + delta, d.month, d.day)
-
-
-def load_lesson_id_by_name(csv_path: str) -> dict[str, int]:
-    """授業名 → LessonId（先頭行を採用。CSV は UTF-8 想定、BOM 付きも可）"""
-    out: dict[str, int] = {}
-    with open(csv_path, encoding="utf-8-sig", newline="") as f:
-        for row in csv.DictReader(f):
-            name = (row.get("授業名") or "").strip()
-            if not name or name in out:
-                continue
-            raw = row.get("LessonId")
-            if raw is None or str(raw).strip() == "":
-                continue
-            out[name] = int(str(raw).strip())
-    return out
 
 
 def kyukou_to_dict(k: Kyukou) -> dict:
@@ -99,7 +85,7 @@ def login_session() -> requests.Session:
     return session
 
 
-def get_kyukou(table_rows, lesson_by_name: dict[str, int]) -> list[Kyukou]:
+def get_kyukou(table_rows) -> list[Kyukou]:
     kyukou_lessons: list[Kyukou] = []
     for row in table_rows:
         date_td = row.find("td", {"data-col-responsive-title": "日付"})
@@ -132,13 +118,9 @@ def get_kyukou(table_rows, lesson_by_name: dict[str, int]) -> list[Kyukou]:
                 new_date = _add_years(new_date, 1)
             if new_date > nendo_end():
                 new_date = _add_years(new_date, -1)
-            lname = lecture_name.text.strip()
-            lesson_id = lesson_by_name.get(lname)
-            if lesson_id is None:
-                continue
             kyukou_lessons.append(
                 {
-                    "lessonId": lesson_id,
+                    "lessonId": 0,
                     "date": new_date,
                     "period": int(period.text.strip()[0]),
                     "lessonName": lecture_name.text.strip(),
@@ -151,7 +133,7 @@ def get_kyukou(table_rows, lesson_by_name: dict[str, int]) -> list[Kyukou]:
     return kyukou_lessons
 
 
-def get_sup_lesson(table_rows, lesson_by_name: dict[str, int]) -> list[Supple]:
+def get_sup_lesson(table_rows) -> list[Supple]:
     supplemental: list[Supple] = []
     room_name_to_id = {
         "アトリエ": "50",
@@ -209,15 +191,11 @@ def get_sup_lesson(table_rows, lesson_by_name: dict[str, int]) -> list[Supple]:
                 new_date = _add_years(new_date, 1)
             if new_date > nendo_end():
                 new_date = _add_years(new_date, -1)
-            lname = lecture_name.text.strip()
-            lesson_id = lesson_by_name.get(lname)
-            if lesson_id is None:
-                continue
             room_name = room_td.text.strip()
             room_id = int(room_name_to_id[room_name]) if room_name in room_name_to_id else 0
             supplemental.append(
                 {
-                    "lessonId": lesson_id,
+                    "lessonId": 0,
                     "date": new_date,
                     "period": int(period.text.strip()[0]),
                     "lessonName": lecture_name.text.strip(),
@@ -231,9 +209,7 @@ def get_sup_lesson(table_rows, lesson_by_name: dict[str, int]) -> list[Supple]:
     return supplemental
 
 
-def fetch_cancel_supple(
-    syllabus_csv_path: str = "syllabus_2025_lessons.csv",
-) -> tuple[list[Kyukou], list[Supple]]:
+def fetch_cancel_supple() -> tuple[list[Kyukou], list[Supple]]:
     if not USERNAME or not PASSWORD:
         raise RuntimeError("環境変数 USER_ID / USER_PASSWORD を設定してください")
     session = login_session()
@@ -245,10 +221,7 @@ def fetch_cancel_supple(
     finally:
         session.close()
 
-    lesson_by_name = load_lesson_id_by_name(syllabus_csv_path)
-    return get_kyukou(table_rows, lesson_by_name), get_sup_lesson(
-        table_rows, lesson_by_name
-    )
+    return get_kyukou(table_rows), get_sup_lesson(table_rows)
 
 
 def main() -> None:
