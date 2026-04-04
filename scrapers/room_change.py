@@ -11,7 +11,7 @@ from scrapers.nendo import add_years, nendo_end, nendo_start
 class RoomChange(TypedDict):
     lessonId: int
     date: date
-    period: int
+    period: str
     lessonName: str
     campus: str
     staff: str
@@ -52,7 +52,7 @@ def get_room_changes(table_rows) -> list[RoomChange]:
             {
                 "lessonId": 0,
                 "date": new_date,
-                "period": int(period.text.strip()[0]),
+                "period": f"Period{int(period.text.strip()[0])}",
                 "lessonName": lecture_name.text.strip(),
                 "campus": campus.text.strip(),
                 "staff": instructor.text.strip(),

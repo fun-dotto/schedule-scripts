@@ -11,7 +11,7 @@ from scrapers.nendo import add_years, nendo_end, nendo_start
 class MakeupClasses(TypedDict):
     lessonId: int
     date: date
-    period: int
+    period: str
     lessonName: str
     campus: str
     staff: str
@@ -88,7 +88,7 @@ def get_makeup_classes(table_rows) -> list[MakeupClasses]:
                 {
                     "lessonId": 0,
                     "date": new_date,
-                    "period": int(period.text.strip()[0]),
+                    "period": f"Period{int(period.text.strip()[0])}",
                     "lessonName": lecture_name.text.strip(),
                     "campus": campus.text.strip(),
                     "staff": instructor.text.strip(),
