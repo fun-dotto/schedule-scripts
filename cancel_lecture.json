@@ -2,1041 +2,1145 @@
   {
     "lessonId": 106101,
     "date": "2026-04-06",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "アルゴリズムとデータ構造2-ABCD",
     "campus": "本学",
     "staff": "佐藤　生馬",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "2b5236b2-86e5-476e-af0e-f739dcbef7c0"
   },
   {
     "lessonId": 500103,
     "date": "2026-04-06",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "ｼｽﾃﾑ情報科学におけるｱｶﾃﾞﾐｯｸﾘﾃﾗｼｰIM1,2",
     "campus": "本学",
     "staff": "南部　美砂子",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "b5222a76-f735-4b4e-9d4e-28f6d395fc3f"
   },
   {
     "lessonId": 104001,
     "date": "2026-04-06",
-    "period": 4,
+    "period": "Period4",
     "lessonName": "バーチャル・イングリッシュ・プログラムⅠ1",
     "campus": "本学",
     "staff": "ＶＥＰ担当",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "24e097ec-9b4a-478b-b2cc-5665dc245653"
   },
   {
     "lessonId": 106001,
     "date": "2026-04-06",
-    "period": 5,
+    "period": "Period5",
     "lessonName": "バーチャル・イングリッシュ・プログラムⅢ2",
     "campus": "本学",
     "staff": "ＶＥＰ担当",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "60182574-f025-4af0-bb7e-bfa1005ca43d"
   },
   {
     "lessonId": 103503,
     "date": "2026-04-06",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "解析学I1-IJKL",
     "campus": "本学",
     "staff": "加藤　譲",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "bc36137b-91c2-4bfa-be1f-04a9b37441d3"
   },
   {
     "lessonId": 100401,
     "date": "2026-04-06",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "言語と社会1～4",
     "campus": "本学",
     "staff": "松本　斉子",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "40121b26-22c6-4c0f-bd01-289e1d8a3fdc"
   },
   {
     "lessonId": 103303,
     "date": "2026-04-06",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "情報機器概論1-IJKL",
     "campus": "本学",
     "staff": "白石　陽",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "3b435bfb-fb9e-422b-8286-14de77db2149"
   },
   {
     "lessonId": 105801,
     "date": "2026-04-06",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "情報表現基礎Ⅱ2-E",
     "campus": "本学",
     "staff": "長田　純一",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "f620141d-2033-4745-a0fd-85c6dce9682d"
   },
   {
     "lessonId": 105802,
     "date": "2026-04-06",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "情報表現基礎Ⅱ2-F",
     "campus": "本学",
     "staff": "島影　圭佑",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "61af4608-54f5-43fd-9e9d-919585daee80"
   },
   {
     "lessonId": 105901,
     "date": "2026-04-06",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "情報表現基礎演習Ⅱ2-E",
     "campus": "本学",
     "staff": "長田　純一",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "57518a3e-06fd-4216-959b-715864427294"
   },
   {
     "lessonId": 105902,
     "date": "2026-04-06",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "情報表現基礎演習Ⅱ2-F",
     "campus": "本学",
     "staff": "島影　圭佑",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "ded9779c-b1fc-4e6a-9066-deba9102ad28"
   },
   {
     "lessonId": 103603,
     "date": "2026-04-06",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "数学総合演習I1-ABCD",
     "campus": "本学",
     "staff": "寺井　あすか",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "8bc8ddf5-8cd4-4cff-86c2-9502adb59c20"
   },
   {
     "lessonId": 115101,
     "date": "2026-04-06",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "数値解析3-GHI",
     "campus": "本学",
     "staff": "加藤　譲",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "5700baf4-95f5-47e2-9e7a-278bcfbb320a"
   },
   {
     "lessonId": 103901,
     "date": "2026-04-06",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "物理学入門1",
     "campus": "本学",
     "staff": "櫻沢　繁",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "5518b3b7-5479-4f2f-bfdb-356fa42dddb6"
   },
   {
     "lessonId": 102803,
     "date": "2026-04-06",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "余暇と健康Ⅱ1-GH",
     "campus": "本学",
     "staff": "吉村　功",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "eb452635-1864-4a79-8204-abde4f68e3a9"
   },
   {
     "lessonId": 108002,
     "date": "2026-04-06",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "ソフトウェア設計論3-ABCDEF（旧:ソフトウェア設計論 II）",
     "campus": "本学",
     "staff": "伊藤　恵",
     "comment": "補講未定",
-    "type": "補講未定"
+    "type": "補講未定",
+    "subject_id": "72941be8-4a13-4f70-a286-17b87f856e4b"
   },
   {
     "lessonId": 119603,
     "date": "2026-04-06",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "スタディスキル1-EF",
     "campus": "本学",
     "staff": "辻　義人",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "a11304da-b8f0-4d72-8d2a-37519d088fe9"
   },
   {
     "lessonId": 119601,
     "date": "2026-04-07",
-    "period": 4,
+    "period": "Period4",
     "lessonName": "スタディスキル1-AB",
     "campus": "本学",
     "staff": "リヴァーズ　ダミアン",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "f59c3252-3a26-4dd1-9db4-228c50e6b63a"
   },
   {
     "lessonId": 102806,
     "date": "2026-04-07",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "余暇と健康Ⅱ1-KL",
     "campus": "本学",
     "staff": "西谷　卓也",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "d0b177ca-1973-492d-9b54-e3700f28cd0f"
   },
   {
     "lessonId": 101501,
     "date": "2026-04-07",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "余暇と健康Ⅰ1～4",
     "campus": "本学",
     "staff": "西谷　卓也",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "531f5fc5-fcea-4525-87e2-b5b58afedf5e"
   },
   {
     "lessonId": 103601,
     "date": "2026-04-07",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "数学総合演習I1-IJKL",
     "campus": "本学",
     "staff": "川口　聡",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "f8579c70-99ad-4fd5-9b8c-a005d0aeaa3d"
   },
   {
     "lessonId": 103402,
     "date": "2026-04-07",
-    "period": 5,
+    "period": "Period5",
     "lessonName": "線形代数学Ⅰ1-EFGH",
     "campus": "本学",
     "staff": "寺沢　憲吾",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "b30ab5e4-fe8e-4e7c-ac63-4773cc91f049"
   },
   {
     "lessonId": 108901,
     "date": "2026-04-07",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "知覚システム論3-EF",
     "campus": "本学",
     "staff": "伊藤　精英",
     "comment": "補講未定",
-    "type": "補講未定"
+    "type": "補講未定",
+    "subject_id": "1f971282-bffa-4399-b517-3458abc913a3"
   },
   {
     "lessonId": 101001,
     "date": "2026-04-07",
-    "period": 5,
+    "period": "Period5",
     "lessonName": "情報メディア社会論1～4",
     "campus": "本学",
     "staff": "クマレ　ハラルドミハエル",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "4216f202-2d75-4ea5-8921-699cdce0cede"
   },
   {
     "lessonId": 108301,
     "date": "2026-04-07",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "情報ネットワーク3-ABCD",
     "campus": "本学",
     "staff": "稲村　浩",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "4de57bf7-de40-4088-b025-76efb5cae19a"
   },
   {
     "lessonId": 108501,
     "date": "2026-04-07",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "ネットワーク通信理論3-ABCD",
     "campus": "本学",
     "staff": "佐藤　仁樹",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "9507dfb3-12d9-4f39-8775-c61bca760fd7"
   },
   {
     "lessonId": 111001,
     "date": "2026-04-07",
-    "period": 4,
+    "period": "Period4",
     "lessonName": "形式言語とオートマトン2-GHI",
     "campus": "本学",
     "staff": "義永　那津人",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "5b14d159-3f2a-4e33-963d-246e4a554f19"
   },
   {
     "lessonId": 108201,
     "date": "2026-04-07",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "画像認識3-ABCDEF",
     "campus": "本学",
     "staff": "長崎　健",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "4c2bebea-ca42-46b3-856c-f1d49f18500c"
   },
   {
     "lessonId": 103502,
     "date": "2026-04-07",
-    "period": 4,
+    "period": "Period4",
     "lessonName": "解析学I1-EFGH",
     "campus": "本学",
     "staff": "田中　吉太郎",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "8f83ad25-5383-4129-8016-9f4aca872989"
   },
   {
     "lessonId": 119201,
     "date": "2026-04-07",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "モデリング入門1（旧:複雑系科学トピックス2-GHI2前）",
     "campus": "本学",
     "staff": "齊藤　朝輝",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "996cc2f3-2657-4334-a567-acc8591f58e1"
   },
   {
     "lessonId": 103106,
     "date": "2026-04-07",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "コミュニケーションIII2-KL",
     "campus": "本学",
     "staff": "リヴァーズ　ダミアン",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "1939595b-d929-4633-a6af-7dd9b82f5094"
   },
   {
     "lessonId": 103104,
     "date": "2026-04-07",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "コミュニケーションIII2-GH",
     "campus": "本学",
     "staff": "山田　浩",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "ea712415-7952-4769-973b-3cfc030faf56"
   },
   {
     "lessonId": 103105,
     "date": "2026-04-07",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "コミュニケーションIII2-IJ",
     "campus": "本学",
     "staff": "イドネカッソネ　ビンセンゾウ",
     "comment": "補講未定",
-    "type": "補講未定"
+    "type": "補講未定",
+    "subject_id": "adb98fde-92a8-4b44-bab8-b2eb8dd57518"
   },
   {
     "lessonId": 102901,
     "date": "2026-04-07",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "コミュニケーションI1-A",
     "campus": "本学",
     "staff": "バゲンダ　ドミニク",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "29bd20f8-2d9c-46d7-b428-b51933b1129e"
   },
   {
     "lessonId": 102902,
     "date": "2026-04-07",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "コミュニケーションI1-B",
     "campus": "本学",
     "staff": "スミス　アダム",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "d267b15e-b1b3-43b2-b698-97c10eff2090"
   },
   {
     "lessonId": 102903,
     "date": "2026-04-07",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "コミュニケーションI1-C",
     "campus": "本学",
     "staff": "ジョンソン　アンドリュー",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "05ff369e-a83d-41d7-af1c-5d3e9186380a"
   },
   {
     "lessonId": 102904,
     "date": "2026-04-07",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "コミュニケーションI1-D",
     "campus": "本学",
     "staff": "ルースベン－スチュアート　ピーター",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "cb6e229b-873a-4e1d-96d1-be7e30b7b9ae"
   },
   {
     "lessonId": 102909,
     "date": "2026-04-07",
-    "period": 4,
+    "period": "Period4",
     "lessonName": "コミュニケーションI1-I",
     "campus": "本学",
     "staff": "バゲンダ　ドミニク",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "cdadc61c-3e9d-4da1-b464-8e929d3ca5c2"
   },
   {
     "lessonId": 102910,
     "date": "2026-04-07",
-    "period": 4,
+    "period": "Period4",
     "lessonName": "コミュニケーションI1-J",
     "campus": "本学",
     "staff": "ジョンソン　アンドリュー",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "5175b812-8f3e-4838-a3ba-b5df56a7cd58"
   },
   {
     "lessonId": 103101,
     "date": "2026-04-07",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "コミュニケーションIII2-AB",
     "campus": "本学",
     "staff": "リヴァーズ　ダミアン",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "db21a6e8-ea7b-4ec8-a147-f27842609f28"
   },
   {
     "lessonId": 103102,
     "date": "2026-04-07",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "コミュニケーションIII2-CD",
     "campus": "本学",
     "staff": "山田　浩",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "0f207f8d-262f-481e-bba7-ffbb87000221"
   },
   {
     "lessonId": 103103,
     "date": "2026-04-07",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "コミュニケーションIII2-EF",
     "campus": "本学",
     "staff": "イドネカッソネ　ビンセンゾウ",
     "comment": "補講未定",
-    "type": "補講未定"
+    "type": "補講未定",
+    "subject_id": "10be1441-e19b-4203-afd5-43cc9b81e689"
   },
   {
     "lessonId": 102912,
     "date": "2026-04-08",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "コミュニケーションI1-L",
     "campus": "本学",
     "staff": "ルースベン－スチュアート　ピーター",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "65ae3dd8-3fa3-494f-90fa-f9d45932c34f"
   },
   {
     "lessonId": 102911,
     "date": "2026-04-08",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "コミュニケーションI1-K",
     "campus": "本学",
     "staff": "スミス　アダム",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "19ba7c58-a249-479e-a814-6f17fafdc918"
   },
   {
     "lessonId": 102908,
     "date": "2026-04-08",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "コミュニケーションI1-H",
     "campus": "本学",
     "staff": "ルースベン－スチュアート　ピーター",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "cf040cbe-eb51-44a0-a563-06bd5ee85e3c"
   },
   {
     "lessonId": 102905,
     "date": "2026-04-08",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "コミュニケーションI1-E",
     "campus": "本学",
     "staff": "ジョンソン　アンドリュー",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "211d8a3d-7fb5-4eed-9561-cb8e681485b9"
   },
   {
     "lessonId": 102906,
     "date": "2026-04-08",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "コミュニケーションI1-F",
     "campus": "本学",
     "staff": "スミス　アダム",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "0a2d3dc3-2c4c-40da-b700-5e1e565e1714"
   },
   {
     "lessonId": 102907,
     "date": "2026-04-08",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "コミュニケーションI1-G",
     "campus": "本学",
     "staff": "バゲンダ　ドミニク",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "30835f38-a593-4ded-be64-7d2d6d864098"
   },
   {
     "lessonId": 111101,
     "date": "2026-04-08",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "システム数学基礎2-GHI",
     "campus": "本学",
     "staff": "川口　聡",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "ddafbcfa-14e2-4ded-bb5d-7e84a185cc95"
   },
   {
     "lessonId": 108101,
     "date": "2026-04-08",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "ヒューマンインタフェース3-ABCD",
     "campus": "本学",
     "staff": "安井　重哉",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "c2007ec6-9cc9-479a-a993-9de496cd6738"
   },
   {
     "lessonId": 115501,
     "date": "2026-04-08",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "ヒューマンインタフェース3-EFJKL",
     "campus": "本学",
     "staff": "安井　重哉",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "58570862-25e3-4f93-818a-99a131cc9c79"
   },
   {
     "lessonId": 100701,
     "date": "2026-04-08",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "ロボットの科学技術1～4",
     "campus": "本学",
     "staff": "三上　貞芳",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "61f1abde-4ece-4a2e-ad19-b9518750f4dc"
   },
   {
     "lessonId": 114901,
     "date": "2026-04-08",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "情報ネットワーク3-EFGHI",
     "campus": "本学",
     "staff": "稲村　浩",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "e7d9171c-4574-4f6b-8080-408eea25cdba"
   },
   {
     "lessonId": 103302,
     "date": "2026-04-08",
-    "period": 5,
+    "period": "Period5",
     "lessonName": "情報機器概論1-ABCD",
     "campus": "本学",
     "staff": "西澤　俊広",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "e66d0c61-c495-4b03-8a2c-5c44b849ffcc"
   },
   {
     "lessonId": 103602,
     "date": "2026-04-08",
-    "period": 5,
+    "period": "Period5",
     "lessonName": "数学総合演習I1-EFGH",
     "campus": "本学",
     "staff": "石田　繁巳",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "26200a1e-4722-4b04-893b-e5c28ea0caba"
   },
   {
     "lessonId": 103705,
     "date": "2026-04-08",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "情報表現入門1-IJ",
     "campus": "本学",
     "staff": "角　薫",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "3640ec8d-de31-4f41-99b7-e8e5b34944a1"
   },
   {
     "lessonId": 103706,
     "date": "2026-04-08",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "情報表現入門1-KL",
     "campus": "本学",
     "staff": "角　康之",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "9de86567-c3da-4fc3-91ce-705de401c2f6"
   },
   {
     "lessonId": 505001,
     "date": "2026-04-08",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "知能情報科学通論M1,2",
     "campus": "本学",
     "staff": "村井　源",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "de12af6a-b20b-4d13-82e4-963ef2f481a4"
   },
   {
     "lessonId": 504601,
     "date": "2026-04-08",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "複雑系システム特論M1,2",
     "campus": "本学",
     "staff": "櫻沢　繁",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "69bad194-c361-4680-8057-2b5871dec512"
   },
   {
     "lessonId": 111301,
     "date": "2026-04-08",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "生物物理の基礎2-GHI",
     "campus": "本学",
     "staff": "櫻沢　繁",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "28d84d9a-2506-4513-8f7c-44f82e90661d"
   },
   {
     "lessonId": 103401,
     "date": "2026-04-08",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "線形代数学Ⅰ1-ABCD",
     "campus": "本学",
     "staff": "栗川　知己",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "e1f22518-ed68-4959-aeca-63d19aaba606"
   },
   {
     "lessonId": 102802,
     "date": "2026-04-08",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "余暇と健康Ⅱ1-CD",
     "campus": "本学",
     "staff": "鈴木　利治",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "86f3bd41-ddb5-4437-93f6-35d760db4edb"
   },
   {
     "lessonId": 102801,
     "date": "2026-04-08",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "余暇と健康Ⅱ1-EF",
     "campus": "本学",
     "staff": "西谷　卓也",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "ed7cdb76-f1b6-4e4c-ab6f-82500c9c1b16"
   },
   {
     "lessonId": 104902,
     "date": "2026-04-08",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "情報マネジメント論2-ABCDEF（旧:情報マネージメント論）",
     "campus": "本学",
     "staff": "石尾　隆",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "ebca7d7a-644a-4b3c-82de-a499ee7cd690"
   },
   {
     "lessonId": 119602,
     "date": "2026-04-08",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "スタディスキル1-CD",
     "campus": "本学",
     "staff": "辻　義人",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "ff1e762a-f9ac-4a54-9a8f-54d4db5b76f1"
   },
   {
     "lessonId": 119604,
     "date": "2026-04-08",
-    "period": 4,
+    "period": "Period4",
     "lessonName": "スタディスキル1-GH",
     "campus": "本学",
     "staff": "山田　浩",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "a2aebee6-b0ab-4da7-9984-a7ad330324bb"
   },
   {
     "lessonId": 119606,
     "date": "2026-04-09",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "スタディスキル1-KL",
     "campus": "本学",
     "staff": "イドネカッソネ　ビンセンゾウ",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "7a559b81-0ca0-4f72-ab55-e1828ee4a7ea"
   },
   {
     "lessonId": 102805,
     "date": "2026-04-09",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "余暇と健康Ⅱ1-IJ",
     "campus": "本学",
     "staff": "西谷　卓也",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "24cb8ec4-67bc-4ac5-966c-a5768ce8c9c7"
   },
   {
     "lessonId": 102804,
     "date": "2026-04-09",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "余暇と健康Ⅱ1-AB",
     "campus": "本学",
     "staff": "鈴木　利治",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "887bdd58-5c8e-4586-a2d1-0cf9ffa5cdfe"
   },
   {
     "lessonId": 100101,
     "date": "2026-04-09",
-    "period": 5,
+    "period": "Period5",
     "lessonName": "認知科学1～4",
     "campus": "本学",
     "staff": "花田　光彦",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "5dd13756-b8be-4224-838e-09e185a88555"
   },
   {
     "lessonId": 112901,
     "date": "2026-04-09",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "人工知能基礎2-JKL",
     "campus": "本学",
     "staff": "寺井　あすか",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "2779e449-d8ea-41bd-a064-715852863757"
   },
   {
     "lessonId": 103703,
     "date": "2026-04-09",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "情報表現入門1-EF",
     "campus": "本学",
     "staff": "竹川　佳成",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "ba8019a2-95ce-4309-90b3-011f1f51c60c"
   },
   {
     "lessonId": 103704,
     "date": "2026-04-09",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "情報表現入門1-GH",
     "campus": "本学",
     "staff": "島影　圭佑",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "2175f268-fc08-4227-86cb-1448511c3367"
   },
   {
     "lessonId": 103801,
     "date": "2026-04-09",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "科学技術リテラシ1-ABCD",
     "campus": "本学",
     "staff": "辻　義人",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "dc3c96ce-c9f2-4d79-8849-4e1c40e52b74"
   },
   {
     "lessonId": 111801,
     "date": "2026-04-09",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "確率・統計学2-EFJKL",
     "campus": "本学",
     "staff": "姜　暁鴻",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "a0a8135d-694e-40d1-8764-e1d9882d8cdf"
   },
   {
     "lessonId": 117102,
     "date": "2026-04-09",
-    "period": 4,
+    "period": "Period4",
     "lessonName": "機械学習Ⅱ3-GHI（旧:数理情報科学 3後）",
     "campus": "本学",
     "staff": "島内　宏和",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "2868c259-a9a8-4a5c-95f5-9d418897c5ef"
   },
   {
     "lessonId": 105101,
     "date": "2026-04-09",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "ハードウェア基礎2-ABCD",
     "campus": "本学",
     "staff": "石榑　康雄",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "9554618b-018a-4735-924f-314d2f239f33"
   },
   {
     "lessonId": 110901,
     "date": "2026-04-09",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "ハードウェア基礎2-GHI",
     "campus": "本学",
     "staff": "白勢　政明",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "58385fac-8351-4309-9ecc-14c4890f6458"
   },
   {
     "lessonId": 102904,
     "date": "2026-04-09",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "コミュニケーションI1-D",
     "campus": "本学",
     "staff": "ルースベン－スチュアート　ピーター",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "cb6e229b-873a-4e1d-96d1-be7e30b7b9ae"
   },
   {
     "lessonId": 102903,
     "date": "2026-04-09",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "コミュニケーションI1-C",
     "campus": "本学",
     "staff": "ジョンソン　アンドリュー",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "05ff369e-a83d-41d7-af1c-5d3e9186380a"
   },
   {
     "lessonId": 102902,
     "date": "2026-04-09",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "コミュニケーションI1-B",
     "campus": "本学",
     "staff": "スミス　アダム",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "d267b15e-b1b3-43b2-b698-97c10eff2090"
   },
   {
     "lessonId": 102901,
     "date": "2026-04-09",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "コミュニケーションI1-A",
     "campus": "本学",
     "staff": "バゲンダ　ドミニク",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "29bd20f8-2d9c-46d7-b428-b51933b1129e"
   },
   {
     "lessonId": 112101,
     "date": "2026-04-09",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "アルゴリズムとデータ構造2-GHI",
     "campus": "本学",
     "staff": "山田　恭史",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "df8dc91e-2ef4-43b3-b75c-1a64e4834773"
   },
   {
     "lessonId": 108401,
     "date": "2026-04-09",
-    "period": 4,
+    "period": "Period4",
     "lessonName": "オペレーティングシステム3-EFJKL",
     "campus": "本学",
     "staff": "松原　克弥",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "61cc76b4-004f-4e11-8480-11a3e5d8a8c9"
   },
   {
     "lessonId": 102909,
     "date": "2026-04-09",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "コミュニケーションI1-I",
     "campus": "本学",
     "staff": "バゲンダ　ドミニク",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "cdadc61c-3e9d-4da1-b464-8e929d3ca5c2"
   },
   {
     "lessonId": 102910,
     "date": "2026-04-09",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "コミュニケーションI1-J",
     "campus": "本学",
     "staff": "ジョンソン　アンドリュー",
     "comment": "",
-    "type": "その他"
+    "type": "その他",
+    "subject_id": "5175b812-8f3e-4838-a3ba-b5df56a7cd58"
   },
   {
     "lessonId": 102911,
     "date": "2026-04-10",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "コミュニケーションI1-K",
     "campus": "本学",
     "staff": "スミス　アダム",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "19ba7c58-a249-479e-a814-6f17fafdc918"
   },
   {
     "lessonId": 102908,
     "date": "2026-04-10",
-    "period": 4,
+    "period": "Period4",
     "lessonName": "コミュニケーションI1-H",
     "campus": "本学",
     "staff": "ルースベン－スチュアート　ピーター",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "cf040cbe-eb51-44a0-a563-06bd5ee85e3c"
   },
   {
     "lessonId": 102912,
     "date": "2026-04-10",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "コミュニケーションI1-L",
     "campus": "本学",
     "staff": "ルースベン－スチュアート　ピーター",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "65ae3dd8-3fa3-494f-90fa-f9d45932c34f"
   },
   {
     "lessonId": 103101,
     "date": "2026-04-10",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "コミュニケーションIII2-AB",
     "campus": "本学",
     "staff": "リヴァーズ　ダミアン",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "db21a6e8-ea7b-4ec8-a147-f27842609f28"
   },
   {
     "lessonId": 103103,
     "date": "2026-04-10",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "コミュニケーションIII2-EF",
     "campus": "本学",
     "staff": "イドネカッソネ　ビンセンゾウ",
     "comment": "補講未定",
-    "type": "補講未定"
+    "type": "補講未定",
+    "subject_id": "10be1441-e19b-4203-afd5-43cc9b81e689"
   },
   {
     "lessonId": 103102,
     "date": "2026-04-10",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "コミュニケーションIII2-CD",
     "campus": "本学",
     "staff": "山田　浩",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "0f207f8d-262f-481e-bba7-ffbb87000221"
   },
   {
     "lessonId": 102905,
     "date": "2026-04-10",
-    "period": 4,
+    "period": "Period4",
     "lessonName": "コミュニケーションI1-E",
     "campus": "本学",
     "staff": "ジョンソン　アンドリュー",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "211d8a3d-7fb5-4eed-9561-cb8e681485b9"
   },
   {
     "lessonId": 102907,
     "date": "2026-04-10",
-    "period": 4,
+    "period": "Period4",
     "lessonName": "コミュニケーションI1-G",
     "campus": "本学",
     "staff": "バゲンダ　ドミニク",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "30835f38-a593-4ded-be64-7d2d6d864098"
   },
   {
     "lessonId": 102906,
     "date": "2026-04-10",
-    "period": 4,
+    "period": "Period4",
     "lessonName": "コミュニケーションI1-F",
     "campus": "本学",
     "staff": "スミス　アダム",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "0a2d3dc3-2c4c-40da-b700-5e1e565e1714"
   },
   {
     "lessonId": 108701,
     "date": "2026-04-10",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "ヒューマンインタフェース演習3-E",
     "campus": "本学",
     "staff": "安井　重哉",
     "comment": "補講未定",
-    "type": "補講未定"
+    "type": "補講未定",
+    "subject_id": "40e9d75c-c1aa-4448-82d2-57da0160d6f3"
   },
   {
     "lessonId": 108702,
     "date": "2026-04-10",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "ヒューマンインタフェース演習3-F",
     "campus": "本学",
     "staff": "竹川　佳成",
     "comment": "補講未定",
-    "type": "補講未定"
+    "type": "補講未定",
+    "subject_id": "148607c0-53e0-43a7-aa2b-ba7ca57a18ad"
   },
   {
     "lessonId": 103106,
     "date": "2026-04-10",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "コミュニケーションIII2-KL",
     "campus": "本学",
     "staff": "リヴァーズ　ダミアン",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "1939595b-d929-4633-a6af-7dd9b82f5094"
   },
   {
     "lessonId": 103105,
     "date": "2026-04-10",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "コミュニケーションIII2-IJ",
     "campus": "本学",
     "staff": "イドネカッソネ　ビンセンゾウ",
     "comment": "補講未定",
-    "type": "補講未定"
+    "type": "補講未定",
+    "subject_id": "adb98fde-92a8-4b44-bab8-b2eb8dd57518"
   },
   {
     "lessonId": 103104,
     "date": "2026-04-10",
-    "period": 2,
+    "period": "Period2",
     "lessonName": "コミュニケーションIII2-GH",
     "campus": "本学",
     "staff": "山田　浩",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "ea712415-7952-4769-973b-3cfc030faf56"
   },
   {
     "lessonId": 103802,
     "date": "2026-04-10",
-    "period": 3,
+    "period": "Period3",
     "lessonName": "科学技術リテラシ1-EFGH",
     "campus": "本学",
     "staff": "南部　美砂子",
     "comment": "補講未定",
-    "type": "補講未定"
+    "type": "補講未定",
+    "subject_id": "42fe9d72-8fbd-4c45-9e9c-c5e975ff535c"
   },
   {
     "lessonId": 103803,
     "date": "2026-04-10",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "科学技術リテラシ1-IJKL",
     "campus": "本学",
     "staff": "黒田　実加",
     "comment": "補講未定",
-    "type": "補講未定"
+    "type": "補講未定",
+    "subject_id": "91116e36-543a-4daa-949a-e1dc4543ffba"
   },
   {
     "lessonId": 103701,
     "date": "2026-04-10",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "情報表現入門1-AB",
     "campus": "本学",
     "staff": "村井　源",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "9441ee3a-6eb8-4000-9a63-06e43972587c"
   },
   {
     "lessonId": 103702,
     "date": "2026-04-10",
-    "period": 1,
+    "period": "Period1",
     "lessonName": "情報表現入門1-CD",
     "campus": "本学",
     "staff": "原田　泰",
     "comment": "補講なし",
-    "type": "補講なし"
+    "type": "補講なし",
+    "subject_id": "7ac45d79-e757-4b88-aa77-10798e0019c2"
   }
 ]
