@@ -1,15 +1,1 @@
-[
-  {
-    "lessonId": 111701,
-    "date": "2026-04-06",
-    "period": "Period1",
-    "lessonName": "応用数学II2-JKL",
-    "campus": "本学",
-    "staff": "加納　剛史",
-    "roomFrom": "R791",
-    "roomTo": "オンライン",
-    "subject_id": "1c4a261b-adb7-4df4-9b12-200ad7c921fd",
-    "original_room_id": "ae3ac8da-619d-4450-9e34-b56dfb3db170",
-    "new_room_id": "288dff00-96a1-4d5e-bd79-4b639b60e8ec"
-  }
-]
+[]
