@@ -11,6 +11,9 @@ resource "google_cloud_run_v2_job" "job" {
       containers {
         image = local.image
 
+        # Cloud SQL Python Connector でアプリ内接続するため、
+        # volumes.cloud_sql_instance や vpc_access は不要。
+        # 必要なのは INSTANCE_CONNECTION_NAME と SA の cloudsql.client/instanceUser ロールのみ。
         env {
           name  = "INSTANCE_CONNECTION_NAME"
           value = var.instance_connection_name
@@ -54,13 +57,6 @@ resource "google_cloud_run_v2_job" "job" {
         }
       }
     }
-  }
-
-  lifecycle {
-    ignore_changes = [
-      # CI/CD からイメージタグを更新する運用に備え、template 全体の変更を Terraform では無視
-      template,
-    ]
   }
 
   depends_on = [
