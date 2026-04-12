@@ -17,12 +17,6 @@ resource "google_project_iam_member" "job_sql_instance_user" {
   member  = "serviceAccount:${google_service_account.job.email}"
 }
 
-resource "google_project_iam_member" "job_secret_accessor" {
-  project = var.project_id
-  role    = "roles/secretmanager.secretAccessor"
-  member  = "serviceAccount:${google_service_account.job.email}"
-}
-
 resource "google_sql_user" "job_iam_user" {
   name     = trimsuffix(google_service_account.job.email, ".gserviceaccount.com")
   instance = local.cloud_sql_instance_name
