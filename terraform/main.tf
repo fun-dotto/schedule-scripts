@@ -15,7 +15,7 @@ provider "google" {
 }
 
 locals {
-  service_name = "irregularities-batch"
+  service_name = "class-change-batch"
   image        = "${var.region}-docker.pkg.dev/${var.project_id}/${local.service_name}/${local.service_name}:${var.image_tag}"
 
   cloud_sql_instance_name = split(":", var.instance_connection_name)[2]

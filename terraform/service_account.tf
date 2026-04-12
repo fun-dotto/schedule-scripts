@@ -1,6 +1,6 @@
 resource "google_service_account" "job" {
   account_id   = "${local.service_name}-job"
-  display_name = "Irregularities Batch Cloud Run Job"
+  display_name = "Class Change Batch Cloud Run Job"
 
   depends_on = [google_project_service.required_apis]
 }

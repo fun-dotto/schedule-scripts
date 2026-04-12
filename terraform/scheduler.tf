@@ -1,6 +1,6 @@
 resource "google_service_account" "scheduler" {
   account_id   = "${local.service_name}-scheduler"
-  display_name = "Irregularities Batch Cloud Scheduler"
+  display_name = "Class Change Batch Cloud Scheduler"
 
   depends_on = [google_project_service.required_apis]
 }
@@ -15,7 +15,7 @@ resource "google_cloud_run_v2_job_iam_member" "scheduler_invoker" {
 
 resource "google_cloud_scheduler_job" "trigger" {
   name        = "${local.service_name}-trigger"
-  description = "Trigger irregularities batch Cloud Run Job daily at 17:00 JST"
+  description = "Trigger class change batch Cloud Run Job daily at 17:00 JST"
   schedule    = var.schedule
   time_zone   = "Asia/Tokyo"
   region      = var.region
