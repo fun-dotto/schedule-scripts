@@ -64,6 +64,7 @@ resource "google_cloud_run_v2_job" "job" {
     google_artifact_registry_repository.repo,
     google_project_iam_member.job_sql_client,
     google_project_iam_member.job_sql_instance_user,
-    google_project_iam_member.job_secret_accessor,
+    google_secret_manager_secret_iam_member.job_user_id_accessor,
+    google_secret_manager_secret_iam_member.job_user_password_accessor,
   ]
 }
