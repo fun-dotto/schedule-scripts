@@ -5,6 +5,18 @@ resource "google_service_account" "scheduler" {
   depends_on = [google_project_service.required_apis]
 }
 
+data "google_project" "current" {
+  project_id = var.project_id
+}
+
+resource "google_service_account_iam_member" "scheduler_token_creator" {
+  service_account_id = google_service_account.scheduler.name
+  role               = "roles/iam.serviceAccountTokenCreator"
+  member             = "serviceAccount:service-${data.google_project.current.number}@gcp-sa-cloudscheduler.iam.gserviceaccount.com"
+
+  depends_on = [google_project_service.required_apis]
+}
+
 resource "google_cloud_run_v2_job_iam_member" "scheduler_invoker" {
   project  = google_cloud_run_v2_job.job.project
   location = google_cloud_run_v2_job.job.location
@@ -15,7 +27,7 @@ resource "google_cloud_run_v2_job_iam_member" "scheduler_invoker" {
 
 resource "google_cloud_scheduler_job" "trigger" {
   name        = "${local.service_name}-trigger"
-  description = "Trigger class change batch Cloud Run Job daily at 17:00 JST"
+  description = "Trigger class change batch Cloud Run Job"
   schedule    = var.schedule
   time_zone   = "Asia/Tokyo"
   region      = var.region
