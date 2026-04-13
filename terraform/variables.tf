@@ -12,6 +12,13 @@ variable "region" {
 variable "instance_connection_name" {
   type        = string
   description = "Cloud SQL のインスタンス接続名（project:region:instance 形式）"
+
+  validation {
+    condition = length(split(":", var.instance_connection_name)) == 3 && alltrue([
+      for part in split(":", var.instance_connection_name) : trimspace(part) != ""
+    ])
+    error_message = "instance_connection_name は \"project:region:instance\" 形式で指定してください。"
+  }
 }
 
 variable "db_name" {
