@@ -1,0 +1,8 @@
+project_id               = "your-gcp-project-id"
+region                   = "asia-northeast1"
+instance_connection_name = "your-gcp-project-id:asia-northeast1:your-cloudsql-instance"
+db_name                  = "your_database_name"
+
+# 任意（デフォルト: 毎日 17:00 JST）
+# schedule  = "0 17 * * *"
+# image_tag = "latest"
