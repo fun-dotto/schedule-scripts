@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "lessonId": 117102,
+    "date": "2026-04-17",
+    "period": "Period1",
+    "lessonName": "機械学習Ⅱ3-GHI（旧:数理情報科学 3後）",
+    "campus": "本学",
+    "staff": "島内　宏和",
+    "comment": "オンデマンド（4/17～5/17）",
+    "roomName": "オンライン",
+    "roomId": 0,
+    "subject_id": "2868c259-a9a8-4a5c-95f5-9d418897c5ef"
+  }
+]
