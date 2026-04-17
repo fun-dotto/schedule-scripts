@@ -5,7 +5,7 @@ from __future__ import annotations
 import uuid
 from datetime import date, datetime
 
-from sqlalchemy import Date, DateTime, Text
+from sqlalchemy import BigInteger, Date, DateTime, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
@@ -49,5 +49,23 @@ class RoomChange(Base):
     period: Mapped[str] = mapped_column(Text, nullable=False)
     original_room_id: Mapped[uuid.UUID] = mapped_column(PgUUID, nullable=False)
     new_room_id: Mapped[uuid.UUID] = mapped_column(PgUUID, nullable=False)
+    created_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    updated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class Faculty(Base):
+    __tablename__ = "faculties"
+
+    id: Mapped[uuid.UUID] = mapped_column(PgUUID, primary_key=True, insert_default=uuid.uuid4)
+    email: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+
+class FacultyRoom(Base):
+    __tablename__ = "faculty_rooms"
+
+    id: Mapped[uuid.UUID] = mapped_column(PgUUID, primary_key=True, insert_default=uuid.uuid4)
+    faculty_id: Mapped[uuid.UUID] = mapped_column(PgUUID, nullable=False)
+    room_id: Mapped[uuid.UUID] = mapped_column(PgUUID, nullable=False)
+    year: Mapped[int] = mapped_column(BigInteger, nullable=False)
     created_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     updated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
