@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 
 	"github.com/fun-dotto/schedule-scripts/internal/database"
@@ -24,9 +25,29 @@ func main() {
 		}
 	}()
 
+	cancelledRepo := repository.NewCancelledClassRepository(db)
+	makeupRepo := repository.NewMakeupClassRepository(db)
+	roomChangeRepo := repository.NewRoomChangeRepository(db)
+	courseRegRepo := repository.NewCourseRegistrationRepository(db)
 	notificationRepo := repository.NewNotificationRepository(db)
-	notificationService := service.NewNotificationService(notificationRepo)
-	_ = notificationService
 
-	log.Println("build-class-change-notifications: not implemented yet")
+	svc := service.NewClassChangeNotificationService(
+		cancelledRepo,
+		makeupRepo,
+		roomChangeRepo,
+		courseRegRepo,
+		notificationRepo,
+	)
+
+	summary, err := svc.EnqueueNotifications(context.Background())
+	if err != nil {
+		log.Fatalf("Failed to enqueue notifications: %v", err)
+	}
+	log.Printf(
+		"enqueue summary: cancelled=%d makeup=%d room_change=%d skipped=%d",
+		summary.CancelledEnqueued,
+		summary.MakeupEnqueued,
+		summary.RoomChangeEnqueued,
+		summary.Skipped,
+	)
 }
