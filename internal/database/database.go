@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"log"
 	"net"
 	"os"
 	"time"
@@ -17,19 +16,26 @@ import (
 )
 
 func ConnectWithConnectorIAMAuthN() (*gorm.DB, error) {
-	mustGetenv := func(k string) string {
+	getenv := func(k string) (string, error) {
 		v := os.Getenv(k)
 		if v == "" {
-			log.Fatalf("Warning: %s environment variable not set.", k)
+			return "", fmt.Errorf("%s environment variable not set", k)
 		}
-		return v
+		return v, nil
 	}
 
-	var (
-		dbUser                 = mustGetenv("DB_IAM_USER")              // e.g. 'service-account-name@project-id.iam'
-		dbName                 = mustGetenv("DB_NAME")                  // e.g. 'my-database'
-		instanceConnectionName = mustGetenv("INSTANCE_CONNECTION_NAME") // e.g. 'project:region:instance'
-	)
+	dbUser, err := getenv("DB_IAM_USER") // e.g. 'service-account-name@project-id.iam'
+	if err != nil {
+		return nil, err
+	}
+	dbName, err := getenv("DB_NAME") // e.g. 'my-database'
+	if err != nil {
+		return nil, err
+	}
+	instanceConnectionName, err := getenv("INSTANCE_CONNECTION_NAME") // e.g. 'project:region:instance'
+	if err != nil {
+		return nil, err
+	}
 
 	d, err := cloudsqlconn.NewDialer(
 		context.Background(),
