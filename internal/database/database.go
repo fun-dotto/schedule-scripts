@@ -15,6 +15,10 @@ import (
 	"gorm.io/gorm"
 )
 
+// ConnectWithConnectorIAMAuthN は単一プロセス内で1回呼ばれる前提。
+// Dialer は Close() 経由で解放するためパッケージレベルで保持する。
+var activeDialer *cloudsqlconn.Dialer
+
 func ConnectWithConnectorIAMAuthN() (*gorm.DB, error) {
 	getenv := func(k string) (string, error) {
 		v := os.Getenv(k)
@@ -45,7 +49,13 @@ func ConnectWithConnectorIAMAuthN() (*gorm.DB, error) {
 	if err != nil {
 		return nil, fmt.Errorf("cloudsqlconn.NewDialer: %w", err)
 	}
-	var opts []cloudsqlconn.DialOption
+	success := false
+	defer func() {
+		if !success {
+			_ = d.Close()
+		}
+	}()
+
 	dsn := fmt.Sprintf("user=%s database=%s", dbUser, dbName)
 	config, err := pgx.ParseConfig(dsn)
 	if err != nil {
@@ -53,7 +63,7 @@ func ConnectWithConnectorIAMAuthN() (*gorm.DB, error) {
 	}
 
 	config.DialFunc = func(ctx context.Context, network, instance string) (net.Conn, error) {
-		return d.Dial(ctx, instanceConnectionName, opts...)
+		return d.Dial(ctx, instanceConnectionName)
 	}
 	dbURI := stdlib.RegisterConnConfig(config)
 	sqlDB, err := sql.Open("pgx", dbURI)
@@ -73,6 +83,9 @@ func ConnectWithConnectorIAMAuthN() (*gorm.DB, error) {
 		sqlDB.Close()
 		return nil, fmt.Errorf("gorm.Open: %w", err)
 	}
+
+	activeDialer = d
+	success = true
 	return db, nil
 }
 
@@ -86,9 +99,17 @@ func Close(db *gorm.DB) error {
 		return fmt.Errorf("failed to get database instance: %w", err)
 	}
 
+	var firstErr error
 	if err := sqlDB.Close(); err != nil {
-		return fmt.Errorf("failed to close database: %w", err)
+		firstErr = fmt.Errorf("failed to close database: %w", err)
 	}
 
-	return nil
+	if activeDialer != nil {
+		if err := activeDialer.Close(); err != nil && firstErr == nil {
+			firstErr = fmt.Errorf("failed to close dialer: %w", err)
+		}
+		activeDialer = nil
+	}
+
+	return firstErr
 }
