@@ -27,8 +27,15 @@ func (r *NotificationRepository) UpsertNotification(ctx context.Context, notific
 		}
 
 		if len(uniqueIDs) == 0 {
-			return nil
+			return tx.Where("notification_id = ?", notification.ID).
+				Delete(&database.NotificationTargetUser{}).Error
 		}
+
+		if err := tx.Where("notification_id = ? AND user_id NOT IN ?", notification.ID, uniqueIDs).
+			Delete(&database.NotificationTargetUser{}).Error; err != nil {
+			return err
+		}
+
 		targets := make([]database.NotificationTargetUser, 0, len(uniqueIDs))
 		for _, userID := range uniqueIDs {
 			targets = append(targets, database.NotificationTargetUser{
