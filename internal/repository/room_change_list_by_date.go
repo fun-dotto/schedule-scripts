@@ -8,15 +8,16 @@ import (
 	"github.com/fun-dotto/schedule-scripts/internal/domain"
 )
 
-func (r *CancelledClassRepository) ListUpcoming(ctx context.Context, from time.Time) ([]domain.CancelledClass, error) {
-	var rows []database.CancelledClass
+func (r *RoomChangeRepository) ListByDate(ctx context.Context, date time.Time) ([]domain.RoomChange, error) {
+	var rows []database.RoomChange
 	if err := r.db.WithContext(ctx).
 		Preload("Subject").
-		Where("date >= ?", from.Format("2006-01-02")).
+		Preload("NewRoom").
+		Where("date = ?", date.Format("2006-01-02")).
 		Find(&rows).Error; err != nil {
 		return nil, err
 	}
-	out := make([]domain.CancelledClass, 0, len(rows))
+	out := make([]domain.RoomChange, 0, len(rows))
 	for i := range rows {
 		out = append(out, rows[i].ToDomain())
 	}

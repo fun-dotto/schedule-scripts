@@ -25,7 +25,7 @@ func (s *ClassChangeNotificationService) EnqueueNotifications(ctx context.Contex
 	today := time.Now().In(jst)
 	tomorrow := time.Date(today.Year(), today.Month(), today.Day(), 0, 0, 0, 0, jst).AddDate(0, 0, 1)
 
-	cancelled, err := s.cancelled.ListUpcoming(ctx, tomorrow)
+	cancelled, err := s.cancelled.ListByDate(ctx, tomorrow)
 	if err != nil {
 		return summary, fmt.Errorf("list cancelled_classes: %w", err)
 	}
@@ -55,7 +55,7 @@ func (s *ClassChangeNotificationService) EnqueueNotifications(ctx context.Contex
 		}
 	}
 
-	makeup, err := s.makeup.ListUpcoming(ctx, tomorrow)
+	makeup, err := s.makeup.ListByDate(ctx, tomorrow)
 	if err != nil {
 		return summary, fmt.Errorf("list makeup_classes: %w", err)
 	}
@@ -85,7 +85,7 @@ func (s *ClassChangeNotificationService) EnqueueNotifications(ctx context.Contex
 		}
 	}
 
-	roomChange, err := s.roomChange.ListUpcoming(ctx, tomorrow)
+	roomChange, err := s.roomChange.ListByDate(ctx, tomorrow)
 	if err != nil {
 		return summary, fmt.Errorf("list room_changes: %w", err)
 	}
