@@ -7,7 +7,8 @@ type Notification struct {
 	Title         string
 	Message       string
 	URL           *string
-	NotifyAt      time.Time
+	NotifyAfter   time.Time
+	NotifyBefore  time.Time
 	IsNotified    bool
 	TargetUserIDs []string
 }
