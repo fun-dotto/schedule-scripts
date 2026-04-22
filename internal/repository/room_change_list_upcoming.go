@@ -8,12 +8,12 @@ import (
 	"github.com/fun-dotto/schedule-scripts/internal/domain"
 )
 
-func (r *RoomChangeRepository) ListUpcoming(ctx context.Context, after time.Time) ([]domain.RoomChange, error) {
+func (r *RoomChangeRepository) ListUpcoming(ctx context.Context, from time.Time) ([]domain.RoomChange, error) {
 	var rows []database.RoomChange
 	if err := r.db.WithContext(ctx).
 		Preload("Subject").
 		Preload("NewRoom").
-		Where("date > ?", after).
+		Where("date >= ?", from.Format("2006-01-02")).
 		Find(&rows).Error; err != nil {
 		return nil, err
 	}

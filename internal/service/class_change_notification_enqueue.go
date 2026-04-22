@@ -23,19 +23,26 @@ func (s *ClassChangeNotificationService) EnqueueNotifications(ctx context.Contex
 	var summary EnqueueSummary
 
 	today := time.Now().In(jst)
-	todayStart := time.Date(today.Year(), today.Month(), today.Day(), 0, 0, 0, 0, jst)
+	tomorrow := time.Date(today.Year(), today.Month(), today.Day(), 0, 0, 0, 0, jst).AddDate(0, 0, 1)
 
-	cancelled, err := s.cancelled.ListUpcoming(ctx, todayStart)
+	cancelled, err := s.cancelled.ListUpcoming(ctx, tomorrow)
 	if err != nil {
 		return summary, fmt.Errorf("list cancelled_classes: %w", err)
 	}
 	for _, cc := range cancelled {
+		var message string
+		if periodStr, ok := periodJa(cc.Period); ok {
+			message = fmt.Sprintf("明日、%sの%sは休講です。", periodStr, cc.Subject.Name)
+		} else {
+			log.Printf("warn: unknown period %q for cancelled %s", cc.Period, cc.ID)
+			message = fmt.Sprintf("明日、%sが休講です。", cc.Subject.Name)
+		}
 		enqueued, err := s.enqueueOne(ctx, notificationSpec{
 			sourceType: "cancelled",
 			sourceID:   cc.ID,
 			subjectID:  cc.Subject.ID,
 			title:      "休講のお知らせ",
-			message:    fmt.Sprintf("明日、%sの%sは休講です。", periodJa(cc.Period), cc.Subject.Name),
+			message:    message,
 			classDate:  cc.Date,
 		})
 		if err != nil {
@@ -48,17 +55,24 @@ func (s *ClassChangeNotificationService) EnqueueNotifications(ctx context.Contex
 		}
 	}
 
-	makeup, err := s.makeup.ListUpcoming(ctx, todayStart)
+	makeup, err := s.makeup.ListUpcoming(ctx, tomorrow)
 	if err != nil {
 		return summary, fmt.Errorf("list makeup_classes: %w", err)
 	}
 	for _, m := range makeup {
+		var message string
+		if periodStr, ok := periodJa(m.Period); ok {
+			message = fmt.Sprintf("明日、%sに%sの補講があります。", periodStr, m.Subject.Name)
+		} else {
+			log.Printf("warn: unknown period %q for makeup %s", m.Period, m.ID)
+			message = fmt.Sprintf("明日、%sの補講があります。", m.Subject.Name)
+		}
 		enqueued, err := s.enqueueOne(ctx, notificationSpec{
 			sourceType: "makeup",
 			sourceID:   m.ID,
 			subjectID:  m.Subject.ID,
 			title:      "補講のお知らせ",
-			message:    fmt.Sprintf("明日、%sに%sの補講があります。", periodJa(m.Period), m.Subject.Name),
+			message:    message,
 			classDate:  m.Date,
 		})
 		if err != nil {
@@ -71,17 +85,24 @@ func (s *ClassChangeNotificationService) EnqueueNotifications(ctx context.Contex
 		}
 	}
 
-	roomChange, err := s.roomChange.ListUpcoming(ctx, todayStart)
+	roomChange, err := s.roomChange.ListUpcoming(ctx, tomorrow)
 	if err != nil {
 		return summary, fmt.Errorf("list room_changes: %w", err)
 	}
 	for _, rc := range roomChange {
+		var message string
+		if periodStr, ok := periodJa(rc.Period); ok {
+			message = fmt.Sprintf("明日、%sの%sの教室が%sに変更されます。", periodStr, rc.Subject.Name, rc.NewRoom.Name)
+		} else {
+			log.Printf("warn: unknown period %q for room_change %s", rc.Period, rc.ID)
+			message = fmt.Sprintf("明日、%sの教室が%sに変更されます。", rc.Subject.Name, rc.NewRoom.Name)
+		}
 		enqueued, err := s.enqueueOne(ctx, notificationSpec{
 			sourceType: "room_change",
 			sourceID:   rc.ID,
 			subjectID:  rc.Subject.ID,
 			title:      "教室変更のお知らせ",
-			message:    fmt.Sprintf("明日、%sの%sの教室が%sに変更されます。", periodJa(rc.Period), rc.Subject.Name, rc.NewRoom.Name),
+			message:    message,
 			classDate:  rc.Date,
 		})
 		if err != nil {
@@ -146,21 +167,21 @@ func notifyWindow(classDate time.Time) (notifyAfter, notifyBefore time.Time) {
 	return
 }
 
-func periodJa(p string) string {
+func periodJa(p string) (string, bool) {
 	switch p {
 	case "Period1":
-		return "1限"
+		return "1限", true
 	case "Period2":
-		return "2限"
+		return "2限", true
 	case "Period3":
-		return "3限"
+		return "3限", true
 	case "Period4":
-		return "4限"
+		return "4限", true
 	case "Period5":
-		return "5限"
+		return "5限", true
 	case "Period6":
-		return "6限"
+		return "6限", true
 	default:
-		return p
+		return "", false
 	}
 }

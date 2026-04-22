@@ -8,15 +8,15 @@ import (
 )
 
 type CancelledClassRepository interface {
-	ListUpcoming(ctx context.Context, after time.Time) ([]domain.CancelledClass, error)
+	ListUpcoming(ctx context.Context, from time.Time) ([]domain.CancelledClass, error)
 }
 
 type MakeupClassRepository interface {
-	ListUpcoming(ctx context.Context, after time.Time) ([]domain.MakeupClass, error)
+	ListUpcoming(ctx context.Context, from time.Time) ([]domain.MakeupClass, error)
 }
 
 type RoomChangeRepository interface {
-	ListUpcoming(ctx context.Context, after time.Time) ([]domain.RoomChange, error)
+	ListUpcoming(ctx context.Context, from time.Time) ([]domain.RoomChange, error)
 }
 
 type CourseRegistrationRepository interface {
