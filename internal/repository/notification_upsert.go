@@ -19,6 +19,7 @@ func (r *NotificationRepository) UpsertNotification(ctx context.Context, notific
 	uniqueIDs := uniqueStrings(notification.TargetUserIDs)
 
 	err := r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		// ID 衝突時は本文を更新しない (再通知・重複配信を防ぐため)。target_users の増減のみ下で同期する。
 		if err := tx.Clauses(clause.OnConflict{
 			Columns:   []clause.Column{{Name: "id"}},
 			DoNothing: true,
