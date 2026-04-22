@@ -170,10 +170,19 @@ func (s *NotificationDispatchService) sendToTokens(ctx context.Context, n domain
 		if resp.FailureCount > 0 {
 			for i, r := range resp.Responses {
 				if r.Error != nil {
-					log.Printf("FCM delivery failed for notification %s token=%s: %v", n.ID, tokens[start+i], r.Error)
+					log.Printf("FCM delivery failed for notification %s token=%s: %v", n.ID, redactToken(tokens[start+i]), r.Error)
 				}
 			}
 		}
 	}
 	return totalSuccess, nil
+}
+
+// redactToken は FCM トークンをログ出力する際に、先頭と末尾の数文字だけ残して個人識別につながる情報量を削る。
+func redactToken(token string) string {
+	const keep = 4
+	if len(token) <= keep*2 {
+		return "***"
+	}
+	return token[:keep] + "..." + token[len(token)-keep:]
 }
