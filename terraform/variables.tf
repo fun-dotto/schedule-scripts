@@ -37,3 +37,20 @@ variable "image_tag" {
   description = "Cloud Run Job が参照する Docker イメージタグ"
   default     = "latest"
 }
+
+variable "secret_project_id" {
+  type        = string
+  description = "USER_ID / USER_PASSWORD の Secret を保持している外部プロジェクトの ID"
+}
+
+variable "user_id_secret_name" {
+  type        = string
+  description = "外部プロジェクト上の USER_ID Secret の名前"
+  default     = "class-change-batch-user-id"
+}
+
+variable "user_password_secret_name" {
+  type        = string
+  description = "外部プロジェクト上の USER_PASSWORD Secret の名前"
+  default     = "class-change-batch-user-password"
+}

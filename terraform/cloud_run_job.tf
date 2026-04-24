@@ -34,7 +34,7 @@ resource "google_cloud_run_v2_job" "job" {
           name = "USER_ID"
           value_source {
             secret_key_ref {
-              secret  = google_secret_manager_secret.user_id.secret_id
+              secret  = "projects/${var.secret_project_id}/secrets/${var.user_id_secret_name}"
               version = "latest"
             }
           }
@@ -44,7 +44,7 @@ resource "google_cloud_run_v2_job" "job" {
           name = "USER_PASSWORD"
           value_source {
             secret_key_ref {
-              secret  = google_secret_manager_secret.user_password.secret_id
+              secret  = "projects/${var.secret_project_id}/secrets/${var.user_password_secret_name}"
               version = "latest"
             }
           }
@@ -65,7 +65,5 @@ resource "google_cloud_run_v2_job" "job" {
     google_artifact_registry_repository.repo,
     google_project_iam_member.job_sql_client,
     google_project_iam_member.job_sql_instance_user,
-    google_secret_manager_secret_iam_member.job_user_id_accessor,
-    google_secret_manager_secret_iam_member.job_user_password_accessor,
   ]
 }

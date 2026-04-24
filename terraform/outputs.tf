@@ -18,14 +18,14 @@ output "docker_image" {
   description = "Cloud Run Job が参照するイメージ URI"
 }
 
-output "secret_user_id_name" {
-  value       = google_secret_manager_secret.user_id.secret_id
-  description = "USER_ID のシークレット名（値は gcloud で別途登録）"
+output "secret_user_id_reference" {
+  value       = "projects/${var.secret_project_id}/secrets/${var.user_id_secret_name}"
+  description = "USER_ID が参照している外部プロジェクトの Secret フルパス"
 }
 
-output "secret_user_password_name" {
-  value       = google_secret_manager_secret.user_password.secret_id
-  description = "USER_PASSWORD のシークレット名（値は gcloud で別途登録）"
+output "secret_user_password_reference" {
+  value       = "projects/${var.secret_project_id}/secrets/${var.user_password_secret_name}"
+  description = "USER_PASSWORD が参照している外部プロジェクトの Secret フルパス"
 }
 
 output "cloud_run_job_name" {
