@@ -9,5 +9,6 @@ COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-dev --no-install-project
 
 COPY . .
+RUN uv sync --frozen --no-dev
 
-CMD ["uv", "run", "--frozen", "--no-dev", "python", "main.py"]
+CMD ["uv", "run", "--frozen", "--no-dev", "scrape-class-changes"]
