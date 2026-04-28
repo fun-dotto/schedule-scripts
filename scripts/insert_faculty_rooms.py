@@ -1,4 +1,4 @@
-"""faculty_rooms_data/faculties_{year}.csv を読み faculty_rooms テーブルへ INSERT する。
+"""data/faculties_{year}.csv を読み faculty_rooms テーブルへ INSERT する。
 
 - email -> faculties.id, room_name -> rooms.name で照合
 - room_name 空欄の行はスキップ
@@ -22,7 +22,7 @@ from db.models import Faculty, FacultyRoom
 from db.room_map import load_room_name_to_id_map, normalize_room_name
 
 ROOT = Path(__file__).resolve().parent.parent
-CSV_DIR = ROOT / "faculty_rooms_data"
+CSV_DIR = ROOT / "data"
 YEARS = (2025, 2026)
 
 

@@ -11,7 +11,7 @@ Cloud Run Job + Cloud Scheduler 上で日次実行することを想定してい
 | 種別 | エントリポイント | 役割 |
 | --- | --- | --- |
 | Python | `main.py` | ポータルから休講・補講・教室変更をスクレイピングし、`subjects` / `rooms` と突合して `cancelled_classes` / `makeup_classes` / `room_changes` テーブルへ UPSERT する。 |
-| Python | `scripts/insert_faculty_rooms.py` | `faculty_rooms_data/faculties_{year}.csv` を読み、`faculties.email` と `rooms.name` で照合して `faculty_rooms` を一括 INSERT する（年次運用ツール）。 |
+| Python | `scripts/insert_faculty_rooms.py` | `data/faculties_{year}.csv` を読み、`faculties.email` と `rooms.name` で照合して `faculty_rooms` を一括 INSERT する（年次運用ツール）。 |
 | Go | `cmd/build-class-change-notifications` | 翌日の休講・補講・教室変更を DB から読み、履修者宛の `notifications` レコードを生成（UPSERT）する。 |
 | Go | `cmd/dispatch-notifications` | `notifications` の配信待ちを取得し、対象ユーザーの FCM トークン宛に Firebase Cloud Messaging で送信する。`-dry-run` フラグ対応。 |
 
@@ -20,12 +20,11 @@ Cloud Run Job + Cloud Scheduler 上で日次実行することを想定してい
 ```
 .
 ├── main.py                          # Python: スクレイピング + DB 保存
-├── lesson_ids.py                    # 授業名 ↔ classification_result.csv のマッチング
-├── classification_result.csv        # lessonId 解決用マスタ
+├── lesson_ids.py                    # 授業名 ↔ data/classification_result.csv のマッチング
+├── data/                            # CSV / JSON 入出力（classification_result.csv, faculties_*.csv, rooms.csv, *.json）
 ├── scrapers/                        # ポータルログイン / HTML パース
 ├── db/                              # SQLAlchemy エンジン・モデル・永続化処理
 ├── scripts/insert_faculty_rooms.py  # 教員と居室の年次データ取り込み
-├── faculty_rooms_data/              # CSV マスタ（faculties_*.csv, rooms.csv）
 ├── cmd/                             # Go バイナリのエントリポイント
 │   ├── build-class-change-notifications/
 │   └── dispatch-notifications/
