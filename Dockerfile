@@ -1,14 +1,27 @@
-FROM python:3.12-slim
+# syntax=docker/dockerfile:1.7
+FROM golang:1.25-bookworm AS builder
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+WORKDIR /src
 
-WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY internal ./internal
+COPY cmd ./cmd
 
-COPY . .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+    go build -trimpath -ldflags="-s -w" \
+    -o /out/build-class-change-notifications \
+    ./cmd/build-class-change-notifications
 
-CMD ["python", "main.py"]
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+    go build -trimpath -ldflags="-s -w" \
+    -o /out/dispatch-notifications \
+    ./cmd/dispatch-notifications
+
+FROM gcr.io/distroless/static-debian12:nonroot
+
+COPY --from=builder /out/build-class-change-notifications /bin/build-class-change-notifications
+COPY --from=builder /out/dispatch-notifications /bin/dispatch-notifications
+
+USER nonroot:nonroot

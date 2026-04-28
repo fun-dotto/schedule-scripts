@@ -24,6 +24,21 @@ locals {
   image        = "${var.region}-docker.pkg.dev/${var.project_id}/${local.service_name}/${local.service_name}:${var.image_tag}"
 
   cloud_sql_instance_name = split(":", var.instance_connection_name)[2]
+
+  batch_jobs_repo_name = "batch-jobs"
+  batch_jobs_image     = "${var.region}-docker.pkg.dev/${var.project_id}/${local.batch_jobs_repo_name}/${local.batch_jobs_repo_name}:${var.batch_jobs_image_tag}"
+  batch_jobs_sa_id     = "batch-jobs-job"
+
+  batch_jobs = {
+    "build-class-change-notifications" = {
+      schedule = var.build_class_change_notifications_schedule
+      command  = ["/bin/build-class-change-notifications"]
+    }
+    "dispatch-notifications" = {
+      schedule = var.dispatch_notifications_schedule
+      command  = ["/bin/dispatch-notifications"]
+    }
+  }
 }
 
 resource "google_project_service" "required_apis" {
@@ -34,6 +49,8 @@ resource "google_project_service" "required_apis" {
     "artifactregistry.googleapis.com",
     "sqladmin.googleapis.com",
     "iam.googleapis.com",
+    "fcm.googleapis.com",
+    "firebase.googleapis.com",
   ])
 
   service            = each.key

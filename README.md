@@ -35,7 +35,8 @@ Cloud Run Job + Cloud Scheduler 上で日次実行することを想定してい
 │   ├── repository/                  # DB アクセス
 │   └── service/                     # 通知作成 / FCM 配信ロジック
 ├── terraform/                       # GCP リソース定義（Cloud Run Job + Scheduler 等）
-├── Dockerfile                       # Python ジョブ用イメージ
+├── Dockerfile                       # Go バッチ用イメージ（build-class-change-notifications / dispatch-notifications を 1 イメージに収納）
+├── Dockerfile.scraper               # Python ジョブ（class-change-batch）用イメージ
 ├── go.mod / requirements.txt        # 依存定義
 └── mise.toml                        # ツールチェイン（Python / Go / Terraform）
 ```
@@ -100,21 +101,69 @@ go run ./cmd/dispatch-notifications
 
 `terraform/` 配下に Cloud Run Job / Cloud Scheduler / Artifact Registry / Service Account / IAM の定義一式が入っている。state は `swift2023groupc-tfstate` バケットに保管。
 
+3 つの Cloud Run Job を 2 つの Artifact Registry リポジトリで運用している。
+
+| AR リポジトリ | 用途 | Dockerfile | 含まれるジョブ |
+| --- | --- | --- | --- |
+| `class-change-batch` | Python スクレイパー | `Dockerfile.scraper` | `class-change-batch` |
+| `batch-jobs` | Go バッチ群（単一イメージに複数バイナリ） | `Dockerfile` | `build-class-change-notifications` / `dispatch-notifications` |
+
+### 初回セットアップ
+
 ```sh
 cd terraform
 cp terraform.tfvars.example terraform.tfvars  # 値を埋める
 terraform init
-terraform plan
+
+# 1. Artifact Registry を先に作成（イメージ push 先を用意）
+terraform apply \
+  -target=google_artifact_registry_repository.repo \
+  -target=google_artifact_registry_repository.batch_jobs_repo
+
+# 2. Docker 認証
+gcloud auth configure-docker asia-northeast1-docker.pkg.dev
+
+# 3. イメージ build & push（macOS Apple Silicon は --platform linux/amd64 必須）
+# Python (class-change-batch)
+docker build --platform linux/amd64 -f Dockerfile.scraper \
+  -t asia-northeast1-docker.pkg.dev/swift2023groupc/class-change-batch/class-change-batch:latest .
+docker push asia-northeast1-docker.pkg.dev/swift2023groupc/class-change-batch/class-change-batch:latest
+
+# Go (build-class-change-notifications + dispatch-notifications)
+docker build --platform linux/amd64 \
+  -t asia-northeast1-docker.pkg.dev/swift2023groupc/batch-jobs/batch-jobs:latest .
+docker push asia-northeast1-docker.pkg.dev/swift2023groupc/batch-jobs/batch-jobs:latest
+
+# 4. 残りのリソースを適用
 terraform apply
 ```
 
+### イメージ更新
+
+該当する Dockerfile を修正後、同じタグで build & push し、Cloud Run Job のイメージ参照を再解決させる。
+
+```sh
+gcloud run jobs update <job-name> --region asia-northeast1 \
+  --image asia-northeast1-docker.pkg.dev/swift2023groupc/<repo>/<repo>:latest
+```
+
+`latest` タグでも Cloud Run Job は作成時点の digest を保持するため、タグ据え置き運用ではこの再解決が必要。タグを git SHA 等にするなら `terraform.tfvars` の `image_tag` / `batch_jobs_image_tag` を更新して `terraform apply` するだけで済む。
+
 ### スケジュール
 
-`terraform.tfvars` の `schedule` で cron を指定する（タイムゾーンは Asia/Tokyo 固定、デフォルト `0 17 * * *`）。
+`terraform.tfvars` の以下の変数で cron を指定する（タイムゾーンは Asia/Tokyo 固定）。
+
+| 変数 | 対象ジョブ | デフォルト |
+| --- | --- | --- |
+| `schedule` | `class-change-batch`（Python） | `0 17 * * *` |
+| `build_class_change_notifications_schedule` | `build-class-change-notifications`（Go） | `30 17 * * *` |
+| `dispatch_notifications_schedule` | `dispatch-notifications`（Go） | `0 18 * * *` |
+
+ジョブ間に依存があるためデフォルトを 30 分ずつずらしている（スクレイパー → 通知ビルド → 配信）。スクレイパーが 30 分以内に終わらないようなら、`build_class_change_notifications_schedule` を後ろ倒しすること。
 
 ### シークレット
 
-`USER_ID` / `USER_PASSWORD` は別プロジェクトの Secret Manager で管理し、`secret_project_id` 経由で参照する。Cloud Run Job の SA に対象シークレットへの `roles/secretmanager.secretAccessor` を付与しておくこと。
+`USER_ID` / `USER_PASSWORD` は別プロジェクトの Secret Manager で管理し、`secret_project_id` 経由で参照する（Python の `class-change-batch` のみ使用）。Cloud Run Job の SA に対象シークレットへの `roles/secretmanager.secretAccessor` を付与しておくこと。Go バッチ側は IAM 認証のみで、シークレット参照は不要。
 
 ## 通知の流れ
 
