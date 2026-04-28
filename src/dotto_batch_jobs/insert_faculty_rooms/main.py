@@ -17,11 +17,11 @@ from dotenv import load_dotenv
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from db.engine import get_engine
-from db.models import Faculty, FacultyRoom
-from db.room_map import load_room_name_to_id_map, normalize_room_name
+from dotto_batch_jobs.db.engine import get_engine
+from dotto_batch_jobs.db.models import Faculty, FacultyRoom
+from dotto_batch_jobs.db.room_map import load_room_name_to_id_map, normalize_room_name
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[4]
 CSV_DIR = ROOT / "data"
 YEARS = (2025, 2026)
 

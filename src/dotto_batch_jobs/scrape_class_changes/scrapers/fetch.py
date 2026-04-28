@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from bs4 import BeautifulSoup
 
-from scrapers.auth import PASSWORD, USERNAME, login_session
-from scrapers.cancel_classes import CancelledClass, get_cancelled_classes
-from scrapers.room_change import RoomChange, get_room_changes
-from scrapers.makeup_classes import MakeupClasses, get_makeup_classes
+from dotto_batch_jobs.scrape_class_changes.scrapers.auth import PASSWORD, USERNAME, login_session
+from dotto_batch_jobs.scrape_class_changes.scrapers.cancel_classes import CancelledClass, get_cancelled_classes
+from dotto_batch_jobs.scrape_class_changes.scrapers.room_change import RoomChange, get_room_changes
+from dotto_batch_jobs.scrape_class_changes.scrapers.makeup_classes import MakeupClasses, get_makeup_classes
 
 
 def fetch_cancel_supple() -> tuple[list[CancelledClass], list[MakeupClasses], list[RoomChange]]:

@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import date, datetime
 from typing import TypedDict
 
-from scrapers.nendo import add_years, nendo_end, nendo_start
+from dotto_batch_jobs.scrape_class_changes.scrapers.nendo import add_years, nendo_end, nendo_start
 
 
 class MakeupClasses(TypedDict):

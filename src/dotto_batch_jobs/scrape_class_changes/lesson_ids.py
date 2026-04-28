@@ -183,5 +183,5 @@ def fill_lesson_ids_in_records(
 def default_classification_csv_path(root: Path | None = None) -> Path:
     """data/classification_result.csv。"""
     if root is None:
-        root = Path(__file__).resolve().parent
+        root = Path(__file__).resolve().parents[4]
     return root / "data" / "classification_result.csv"
