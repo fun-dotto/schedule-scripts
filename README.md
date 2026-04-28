@@ -35,15 +35,16 @@ Cloud Run Job + Cloud Scheduler 上で日次実行することを想定してい
 │   └── service/                     # 通知作成 / FCM 配信ロジック
 ├── terraform/                       # GCP リソース定義（Cloud Run Job + Scheduler 等）
 ├── Dockerfile                       # Python ジョブ用イメージ
-├── go.mod / requirements.txt        # 依存定義
-└── mise.toml                        # ツールチェイン（Python / Go / Terraform）
+├── go.mod                           # Go 依存定義
+├── pyproject.toml / uv.lock         # Python 依存定義（uv 管理）
+└── mise.toml                        # ツールチェイン（uv / Go / Terraform）
 ```
 
 ## 必要環境
 
 `mise.toml` で固定しているバージョン。
 
-- Python 3.12.8
+- uv 0.11.8（Python 3.12 は uv が `pyproject.toml` の `requires-python` に従って自動取得）
 - Go 1.25.7
 - Terraform 1.9.8
 
@@ -67,17 +68,18 @@ Cloud Run Job + Cloud Scheduler 上で日次実行することを想定してい
 ### Python ジョブ（スクレイピング + DB 保存）
 
 ```sh
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-python main.py
+uv sync
+uv run python main.py
 ```
 
 実行結果として `data/*.json`（取得結果と必須項目欠落のスキップ一覧）が出力される。
 
+依存追加は `uv add <pkg>`、ロック更新は `uv lock --upgrade`。
+
 ### 教員居室データの取り込み
 
 ```sh
-python -m scripts.insert_faculty_rooms
+uv run python -m scripts.insert_faculty_rooms
 ```
 
 `faculties_{2025,2026}.csv` を読み、未一致の email / room_name があれば INSERT せず中断する。
