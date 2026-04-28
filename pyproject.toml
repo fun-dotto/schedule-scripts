@@ -12,5 +12,10 @@ dependencies = [
     "pg8000>=1.31.0",
 ]
 
-[tool.uv]
-package = false
+[project.scripts]
+scrape-class-changes = "dotto_batch_jobs.scrape_class_changes.main:main"
+insert-faculty-rooms = "dotto_batch_jobs.insert_faculty_rooms.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

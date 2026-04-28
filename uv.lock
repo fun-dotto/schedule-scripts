@@ -228,7 +228,7 @@ wheels = [
 [[package]]
 name = "dotto-batch-jobs"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "beautifulsoup4" },
     { name = "cloud-sql-python-connector", extra = ["pg8000"] },
