@@ -1,14 +1,13 @@
-FROM python:3.12-slim
+FROM ghcr.io/astral-sh/uv:0.11.8-debian-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+ENV PYTHONUNBUFFERED=1 \
+    UV_COMPILE_BYTECODE=1
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev --no-install-project
 
 COPY . .
 
-CMD ["python", "main.py"]
+CMD ["uv", "run", "--frozen", "--no-dev", "python", "main.py"]
