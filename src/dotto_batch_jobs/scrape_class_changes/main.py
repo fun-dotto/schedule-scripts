@@ -22,7 +22,7 @@ from dotto_batch_jobs.scrape_class_changes.scrapers.makeup_classes import makeup
 
 load_dotenv(override=False)
 
-ROOT = Path(__file__).resolve().parents[4]
+ROOT = Path(__file__).resolve().parents[3]
 DATA_DIR = ROOT / "data"
 
 
