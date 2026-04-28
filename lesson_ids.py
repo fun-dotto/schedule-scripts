@@ -1,4 +1,4 @@
-"""classification_result.csv と授業名を照合し、レコードの lessonId を埋める。"""
+"""data/classification_result.csv と授業名を照合し、レコードの lessonId を埋める。"""
 
 from __future__ import annotations
 
@@ -181,7 +181,7 @@ def fill_lesson_ids_in_records(
 
 
 def default_classification_csv_path(root: Path | None = None) -> Path:
-    """リポジトリ直下の classification_result.csv。"""
+    """data/classification_result.csv。"""
     if root is None:
         root = Path(__file__).resolve().parent
-    return root / "classification_result.csv"
+    return root / "data" / "classification_result.csv"
