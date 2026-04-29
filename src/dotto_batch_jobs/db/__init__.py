@@ -1,6 +1,6 @@
 """DB モデルとマイグレーション。"""
 
-from db.models import (
+from dotto_batch_jobs.db.models import (
     Base,
     CancelledClass,
     RoomChange,

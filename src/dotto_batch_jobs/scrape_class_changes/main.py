@@ -4,25 +4,25 @@ from pathlib import Path
 from dotenv import load_dotenv
 from sqlalchemy.orm import Session
 
-from db.engine import get_engine
-from db.persist_schedule import (
+from dotto_batch_jobs.db.engine import get_engine
+from dotto_batch_jobs.db.persist_schedule import (
     partition_cancelled_or_makeup,
     partition_room_changes,
     persist_cancelled,
     persist_makeup,
     persist_room_changes,
 )
-from db.room_map import fill_room_ids_in_room_changes, load_room_name_to_id_map
-from db.subject_map import fill_subject_ids_in_records, load_syllabus_to_subject_id_map
-from lesson_ids import default_classification_csv_path, fill_lesson_ids_in_records
-from scrapers.fetch import fetch_cancel_supple
-from scrapers.cancel_classes import cancelled_classes_to_dict
-from scrapers.room_change import room_change_to_dict
-from scrapers.makeup_classes import makeup_classes_to_dict
+from dotto_batch_jobs.db.room_map import fill_room_ids_in_room_changes, load_room_name_to_id_map
+from dotto_batch_jobs.db.subject_map import fill_subject_ids_in_records, load_syllabus_to_subject_id_map
+from dotto_batch_jobs.scrape_class_changes.lesson_ids import default_classification_csv_path, fill_lesson_ids_in_records
+from dotto_batch_jobs.scrape_class_changes.scrapers.fetch import fetch_cancel_supple
+from dotto_batch_jobs.scrape_class_changes.scrapers.cancel_classes import cancelled_classes_to_dict
+from dotto_batch_jobs.scrape_class_changes.scrapers.room_change import room_change_to_dict
+from dotto_batch_jobs.scrape_class_changes.scrapers.makeup_classes import makeup_classes_to_dict
 
 load_dotenv(override=False)
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[3]
 DATA_DIR = ROOT / "data"
 
 

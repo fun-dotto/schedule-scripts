@@ -10,7 +10,7 @@ from typing import Any
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from db.models import CancelledClass, MakeupClasses, RoomChange
+from dotto_batch_jobs.db.models import CancelledClass, MakeupClasses, RoomChange
 
 
 def _parse_uuid(value: Any) -> uuid.UUID | None:
