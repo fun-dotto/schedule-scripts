@@ -9,7 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
-from scrapers.nendo import YEAR
+from dotto_batch_jobs.scrape_class_changes.scrapers.nendo import YEAR
 
 load_dotenv(override=False)
 USERNAME = os.environ.get("USER_ID")
