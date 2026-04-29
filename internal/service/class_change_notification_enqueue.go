@@ -30,19 +30,19 @@ func (s *ClassChangeNotificationService) EnqueueNotifications(ctx context.Contex
 		return summary, fmt.Errorf("list cancelled_classes: %w", err)
 	}
 	for _, cc := range cancelled {
-		var message string
+		var body string
 		if periodStr, ok := periodJa(cc.Period); ok {
-			message = fmt.Sprintf("明日、%sの%sは休講です。", periodStr, cc.Subject.Name)
+			body = fmt.Sprintf("明日、%sの%sは休講です。", periodStr, cc.Subject.Name)
 		} else {
 			log.Printf("warn: unknown period %q for cancelled %s", cc.Period, cc.ID)
-			message = fmt.Sprintf("明日、%sが休講です。", cc.Subject.Name)
+			body = fmt.Sprintf("明日、%sが休講です。", cc.Subject.Name)
 		}
 		enqueued, err := s.enqueueOne(ctx, notificationSpec{
 			sourceType: "cancelled",
 			sourceID:   cc.ID,
 			subjectID:  cc.Subject.ID,
 			title:      "休講のお知らせ",
-			message:    message,
+			body:       body,
 			classDate:  cc.Date,
 		})
 		if err != nil {
@@ -60,19 +60,19 @@ func (s *ClassChangeNotificationService) EnqueueNotifications(ctx context.Contex
 		return summary, fmt.Errorf("list makeup_classes: %w", err)
 	}
 	for _, m := range makeup {
-		var message string
+		var body string
 		if periodStr, ok := periodJa(m.Period); ok {
-			message = fmt.Sprintf("明日、%sに%sの補講があります。", periodStr, m.Subject.Name)
+			body = fmt.Sprintf("明日、%sに%sの補講があります。", periodStr, m.Subject.Name)
 		} else {
 			log.Printf("warn: unknown period %q for makeup %s", m.Period, m.ID)
-			message = fmt.Sprintf("明日、%sの補講があります。", m.Subject.Name)
+			body = fmt.Sprintf("明日、%sの補講があります。", m.Subject.Name)
 		}
 		enqueued, err := s.enqueueOne(ctx, notificationSpec{
 			sourceType: "makeup",
 			sourceID:   m.ID,
 			subjectID:  m.Subject.ID,
 			title:      "補講のお知らせ",
-			message:    message,
+			body:       body,
 			classDate:  m.Date,
 		})
 		if err != nil {
@@ -90,19 +90,19 @@ func (s *ClassChangeNotificationService) EnqueueNotifications(ctx context.Contex
 		return summary, fmt.Errorf("list room_changes: %w", err)
 	}
 	for _, rc := range roomChange {
-		var message string
+		var body string
 		if periodStr, ok := periodJa(rc.Period); ok {
-			message = fmt.Sprintf("明日、%sの%sの教室が%sに変更されます。", periodStr, rc.Subject.Name, rc.NewRoom.Name)
+			body = fmt.Sprintf("明日、%sの%sの教室が%sに変更されます。", periodStr, rc.Subject.Name, rc.NewRoom.Name)
 		} else {
 			log.Printf("warn: unknown period %q for room_change %s", rc.Period, rc.ID)
-			message = fmt.Sprintf("明日、%sの教室が%sに変更されます。", rc.Subject.Name, rc.NewRoom.Name)
+			body = fmt.Sprintf("明日、%sの教室が%sに変更されます。", rc.Subject.Name, rc.NewRoom.Name)
 		}
 		enqueued, err := s.enqueueOne(ctx, notificationSpec{
 			sourceType: "room_change",
 			sourceID:   rc.ID,
 			subjectID:  rc.Subject.ID,
 			title:      "教室変更のお知らせ",
-			message:    message,
+			body:       body,
 			classDate:  rc.Date,
 		})
 		if err != nil {
@@ -123,9 +123,12 @@ type notificationSpec struct {
 	sourceID   string
 	subjectID  string
 	title      string
-	message    string
+	body       string
 	classDate  time.Time
 }
+
+// APNsSound はクライアント側でデフォルト通知音を鳴らすために "default" を指定する。
+var defaultAPNsSound = "default"
 
 func (s *ClassChangeNotificationService) enqueueOne(ctx context.Context, spec notificationSpec) (bool, error) {
 	userIDs, err := s.courseReg.ListUserIDsBySubject(ctx, spec.subjectID)
@@ -139,15 +142,20 @@ func (s *ClassChangeNotificationService) enqueueOne(ctx context.Context, spec no
 
 	notifyAfter, notifyBefore := notifyWindow(spec.classDate)
 
+	targetUsers := make([]domain.NotificationTargetUser, 0, len(userIDs))
+	for _, uid := range userIDs {
+		targetUsers = append(targetUsers, domain.NotificationTargetUser{UserID: uid})
+	}
+
 	n := domain.Notification{
-		ID:            deterministicNotificationID(spec.sourceType, spec.sourceID),
-		Title:         spec.title,
-		Message:       spec.message,
-		URL:           nil,
-		NotifyAfter:   notifyAfter,
-		NotifyBefore:  notifyBefore,
-		IsNotified:    false,
-		TargetUserIDs: userIDs,
+		ID:           deterministicNotificationID(spec.sourceType, spec.sourceID),
+		Title:        spec.title,
+		Body:         spec.body,
+		APNsSound:    &defaultAPNsSound,
+		URL:          nil,
+		NotifyAfter:  notifyAfter,
+		NotifyBefore: notifyBefore,
+		TargetUsers:  targetUsers,
 	}
 	if _, err := s.notification.UpsertNotification(ctx, n); err != nil {
 		return false, err

@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	dryRun := flag.Bool("dry-run", false, "If set, log planned FCM sends without actually calling Firebase or updating is_notified")
+	dryRun := flag.Bool("dry-run", false, "If set, log planned FCM sends without actually calling Firebase or updating notified_at")
 	flag.Parse()
 
 	if err := godotenv.Load(); err != nil {
