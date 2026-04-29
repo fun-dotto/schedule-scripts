@@ -87,7 +87,6 @@ func (s *NotificationDispatchService) DispatchNotifications(ctx context.Context,
 		}
 	}
 
-	deliveries := make(map[string][]string, len(notifications))
 	for _, n := range notifications {
 		pendingUserIDs := make([]string, 0, len(n.TargetUsers))
 		for _, t := range n.TargetUsers {
@@ -105,7 +104,9 @@ func (s *NotificationDispatchService) DispatchNotifications(ctx context.Context,
 			if dryRun {
 				continue
 			}
-			deliveries[n.ID] = pendingUserIDs
+			if err := s.notification.MarkUsersAsNotified(ctx, map[string][]string{n.ID: pendingUserIDs}); err != nil {
+				return summary, fmt.Errorf("mark users as notified %s: %w", n.ID, err)
+			}
 			continue
 		}
 
@@ -141,16 +142,10 @@ func (s *NotificationDispatchService) DispatchNotifications(ctx context.Context,
 			summary.FailedSend++
 			continue
 		}
-		deliveries[n.ID] = delivered
+		if err := s.notification.MarkUsersAsNotified(ctx, map[string][]string{n.ID: delivered}); err != nil {
+			return summary, fmt.Errorf("mark users as notified %s: %w", n.ID, err)
+		}
 		summary.Dispatched++
-	}
-
-	if len(deliveries) == 0 {
-		return summary, nil
-	}
-
-	if err := s.notification.MarkUsersAsNotified(ctx, deliveries); err != nil {
-		return summary, fmt.Errorf("mark users as notified: %w", err)
 	}
 
 	return summary, nil
