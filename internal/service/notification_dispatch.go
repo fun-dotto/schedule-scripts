@@ -117,10 +117,10 @@ func (s *NotificationDispatchService) DispatchNotifications(ctx context.Context,
 			continue
 		}
 
-		successUserIDs, err := s.sendToTokens(ctx, n, tokens, tokenUserIDs)
-		summary.TotalFCMSent += len(successUserIDs)
+		successUserIDs, sentTokens, err := s.sendToTokens(ctx, n, tokens, tokenUserIDs)
+		summary.TotalFCMSent += sentTokens
 		if err != nil {
-			log.Printf("FCM send partially failed for notification %s (success=%d/%d users): %v", n.ID, len(successUserIDs), len(pendingUserIDs), err)
+			log.Printf("FCM send partially failed for notification %s (success=%d/%d users, tokens=%d/%d): %v", n.ID, len(successUserIDs), len(pendingUserIDs), sentTokens, len(tokens), err)
 		}
 
 		successSet := make(map[string]struct{}, len(successUserIDs))
@@ -168,7 +168,7 @@ func collectTokens(userIDs []string, tokensByUser map[string][]string) ([]string
 	return tokens, tokenUserIDs
 }
 
-func (s *NotificationDispatchService) sendToTokens(ctx context.Context, n domain.Notification, tokens []string, tokenUserIDs []string) ([]string, error) {
+func (s *NotificationDispatchService) sendToTokens(ctx context.Context, n domain.Notification, tokens []string, tokenUserIDs []string) ([]string, int, error) {
 	data := map[string]string{"notification_id": n.ID}
 	if n.URL != nil {
 		data["url"] = *n.URL
@@ -192,6 +192,7 @@ func (s *NotificationDispatchService) sendToTokens(ctx context.Context, n domain
 	webpushConfig := buildWebpushConfig(n)
 
 	successUserSet := make(map[string]struct{})
+	sentTokens := 0
 	for start := 0; start < len(tokens); start += fcmMulticastBatchSize {
 		end := min(start+fcmMulticastBatchSize, len(tokens))
 		msg := &messaging.MulticastMessage{
@@ -205,7 +206,7 @@ func (s *NotificationDispatchService) sendToTokens(ctx context.Context, n domain
 		}
 		resp, err := s.messagingClient.SendEachForMulticast(ctx, msg)
 		if err != nil {
-			return collectSuccessUserIDs(tokenUserIDs, successUserSet), err
+			return collectSuccessUserIDs(tokenUserIDs, successUserSet), sentTokens, err
 		}
 		for i, r := range resp.Responses {
 			uid := tokenUserIDs[start+i]
@@ -213,10 +214,11 @@ func (s *NotificationDispatchService) sendToTokens(ctx context.Context, n domain
 				log.Printf("FCM delivery failed for notification %s token=%s: %v", n.ID, redactToken(tokens[start+i]), r.Error)
 				continue
 			}
+			sentTokens++
 			successUserSet[uid] = struct{}{}
 		}
 	}
-	return collectSuccessUserIDs(tokenUserIDs, successUserSet), nil
+	return collectSuccessUserIDs(tokenUserIDs, successUserSet), sentTokens, nil
 }
 
 func collectSuccessUserIDs(tokenUserIDs []string, successUserSet map[string]struct{}) []string {
