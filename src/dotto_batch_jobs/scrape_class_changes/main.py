@@ -1,7 +1,9 @@
 import json
+import traceback
 from pathlib import Path
 
 from dotenv import load_dotenv
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from dotto_batch_jobs.db.engine import get_engine
@@ -45,8 +47,9 @@ def main() -> None:
                 f"補講: {r_s.matched}/{r_s.total} 件, "
                 f"部屋変更: {r_r.matched}/{r_r.total} 件"
             )
-        except Exception as e:
-            print(f"スキップ: lessonId 照合（{e}）", flush=True)
+        except SQLAlchemyError as e:
+            print(f"スキップ: lessonId 照合（DB エラー: {type(e).__name__}）", flush=True)
+            traceback.print_exc()
 
         syllabus_map = load_syllabus_to_subject_id_map(engine)
         sk = fill_subject_ids_in_records(cancelled_classes_json, syllabus_map)
