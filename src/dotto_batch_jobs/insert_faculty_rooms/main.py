@@ -46,7 +46,7 @@ def _parse_args() -> dict[int, Path]:
     parser = argparse.ArgumentParser(
         description=(
             "faculties CSV を読み faculty_rooms テーブルへ INSERT する。"
-            " CSV は UTF-8 / ヘッダ行必須、必須カラムは name, email, room_name。"
+            " CSV は UTF-8 / ヘッダ行必須、必須カラムは email, room_name。"
             " email は faculties.email、room_name は rooms.name と照合する。"
             " room_name 空欄行はスキップ。"
         )
@@ -60,7 +60,7 @@ def _parse_args() -> dict[int, Path]:
         help=(
             "年度と CSV パスのペア（例: --faculties 2025=<path-to-data-directory>/faculties_2025.csv）。"
             " 複数年度を取り込む場合は本オプションを複数回指定する。"
-            " CSV 必須カラム: name, email, room_name"
+            " CSV 必須カラム: email, room_name"
         ),
     )
     args = parser.parse_args()
@@ -93,9 +93,17 @@ def main() -> None:
             unmatched_rooms: set[str] = set()
             skipped_blank = 0
 
+            required_columns = ("email", "room_name")
             for year, path in sorted(csv_paths.items()):
                 with open(path, encoding="utf-8") as f:
                     reader = csv.DictReader(f)
+                    missing = [c for c in required_columns if c not in (reader.fieldnames or [])]
+                    if missing:
+                        print(
+                            f"中断: {path} に必須カラムがありません: {missing}",
+                            file=sys.stderr,
+                        )
+                        sys.exit(1)
                     for row in reader:
                         room_name = (row.get("room_name") or "").strip()
                         if not room_name:

@@ -83,7 +83,7 @@ uv run insert-faculty-rooms \
   --faculties 2026=<path-to-data-directory>/faculties_2026.csv
 ```
 
-`--faculties YEAR=PATH` で年度ごとの CSV を指定する（複数指定可）。CSV は UTF-8 / ヘッダ行必須で、必須カラムは `name, email, room_name`。未一致の email / room_name があれば INSERT せず中断する。
+`--faculties YEAR=PATH` で年度ごとの CSV を指定する（複数指定可）。CSV は UTF-8 / ヘッダ行必須で、必須カラムは `email, room_name`。必須カラムが欠けている場合および未一致の email / room_name がある場合は INSERT せず中断する。
 
 ### Go ジョブ
 
