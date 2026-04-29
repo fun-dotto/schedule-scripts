@@ -83,7 +83,7 @@ def load_name_maps(engine: Engine) -> tuple[dict[str, int], dict[str, int]]:
 
 
 def fuzzy_pick_id(query_norm: str, normalized: dict[str, int]) -> int | None:
-    """正規化済みクエリに最も近い CSV 側キー 1 件を選ぶ。自信がなければ None。"""
+    """正規化済みクエリに最も近い subjects 由来のキー 1 件を選ぶ。自信がなければ None。"""
     if not query_norm:
         return None
     best_key: str | None = None
