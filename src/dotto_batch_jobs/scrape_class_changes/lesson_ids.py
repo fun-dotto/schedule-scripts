@@ -55,6 +55,10 @@ def load_name_maps(engine: Engine) -> tuple[dict[str, int], dict[str, int]]:
         try:
             sid = int(raw_id)
         except (TypeError, ValueError):
+            print(
+                f"警告: subjects.syllabus_id を int に変換できないためスキップ: {raw_id!r} (name={row.name!r})",
+                file=sys.stderr,
+            )
             continue
         name = (row.name or "").strip()
         if not name:
