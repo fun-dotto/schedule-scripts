@@ -58,7 +58,7 @@ def _parse_args() -> dict[int, Path]:
         type=_parse_faculties,
         metavar="YEAR=PATH",
         help=(
-            "年度と CSV パスのペア（例: --faculties 2025=data/faculties_2025.csv）。"
+            "年度と CSV パスのペア（例: --faculties 2025=<path-to-data-directory>/faculties_2025.csv）。"
             " 複数年度を取り込む場合は本オプションを複数回指定する。"
             " CSV 必須カラム: name, email, room_name"
         ),

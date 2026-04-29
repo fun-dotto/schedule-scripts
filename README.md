@@ -79,8 +79,8 @@ uv run scrape-class-changes
 
 ```sh
 uv run insert-faculty-rooms \
-  --faculties 2025=data/faculties_2025.csv \
-  --faculties 2026=data/faculties_2026.csv
+  --faculties 2025=<path-to-data-directory>/faculties_2025.csv \
+  --faculties 2026=<path-to-data-directory>/faculties_2026.csv
 ```
 
 `--faculties YEAR=PATH` で年度ごとの CSV を指定する（複数指定可）。CSV は UTF-8 / ヘッダ行必須で、必須カラムは `name, email, room_name`。未一致の email / room_name があれば INSERT せず中断する。
