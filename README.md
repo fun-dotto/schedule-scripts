@@ -23,7 +23,7 @@ Cloud Run Job + Cloud Scheduler 上で日次実行することを想定してい
 │   ├── db/                          # SQLAlchemy モデル・エンジン・永続化（共有 DB レイヤ）
 │   ├── scrape_class_changes/        # スクレイピング + DB 保存（scrape-class-changes コマンド）
 │   └── insert_faculty_rooms/        # 教員居室の年次取り込み（insert-faculty-rooms コマンド）
-├── data/                            # JSON 入出力（スクレイピング結果と必須項目欠落のスキップ一覧）
+├── output/                          # スクレイピング結果と必須項目欠落のスキップ一覧（git 管理外）
 ├── cmd/                             # Go バイナリのエントリポイント
 │   ├── build-class-change-notifications/
 │   └── dispatch-notifications/
@@ -71,7 +71,7 @@ uv sync
 uv run scrape-class-changes
 ```
 
-実行結果として `data/*.json`（取得結果と必須項目欠落のスキップ一覧）が出力される。
+実行結果として `output/*.json`（取得結果と必須項目欠落のスキップ一覧）が出力される。
 
 依存追加は `uv add <pkg>`、ロック更新は `uv lock --upgrade`。
 
