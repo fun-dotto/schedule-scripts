@@ -67,3 +67,60 @@ resource "google_cloud_run_v2_job" "job" {
     google_project_iam_member.job_sql_instance_user,
   ]
 }
+
+resource "google_cloud_run_v2_job" "batch_jobs" {
+  for_each = local.batch_jobs
+
+  name                = each.key
+  location            = var.region
+  deletion_protection = false
+
+  template {
+    template {
+      service_account = google_service_account.batch_jobs_job.email
+      timeout         = "900s"
+      max_retries     = 1
+
+      containers {
+        image   = local.batch_jobs_image
+        command = each.value.command
+
+        env {
+          name  = "INSTANCE_CONNECTION_NAME"
+          value = var.instance_connection_name
+        }
+
+        env {
+          name  = "DB_NAME"
+          value = var.db_name
+        }
+
+        env {
+          name  = "DB_IAM_USER"
+          value = trimsuffix(google_service_account.batch_jobs_job.email, ".gserviceaccount.com")
+        }
+
+        # Firebase Admin SDK が project ID を ADC のメタデータから推測するが、
+        # Cloud Run Jobs では明示的に渡しておくと安全。
+        env {
+          name  = "GOOGLE_CLOUD_PROJECT"
+          value = var.project_id
+        }
+
+        resources {
+          limits = {
+            cpu    = "1"
+            memory = "512Mi"
+          }
+        }
+      }
+    }
+  }
+
+  depends_on = [
+    google_project_service.required_apis,
+    google_artifact_registry_repository.batch_jobs_repo,
+    google_project_iam_member.batch_jobs_job_sql_client,
+    google_project_iam_member.batch_jobs_job_sql_instance_user,
+  ]
+}

@@ -54,3 +54,21 @@ variable "user_password_secret_name" {
   description = "外部プロジェクト上の USER_PASSWORD Secret の名前"
   default     = "class-change-batch-user-password"
 }
+
+variable "batch_jobs_image_tag" {
+  type        = string
+  description = "Batch jobs (Go) の Docker イメージタグ"
+  default     = "latest"
+}
+
+variable "build_class_change_notifications_schedule" {
+  type        = string
+  description = "build-class-change-notifications の cron 式（time_zone は Asia/Tokyo 固定）。class-change-batch（Python スクレイパー）の書き込み完了を待つため、デフォルトはスクレイパーの 30 分後。"
+  default     = "30 17 * * *"
+}
+
+variable "dispatch_notifications_schedule" {
+  type        = string
+  description = "dispatch-notifications の cron 式（time_zone は Asia/Tokyo 固定）"
+  default     = "0 18 * * *"
+}

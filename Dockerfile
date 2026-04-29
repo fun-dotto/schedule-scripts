@@ -1,14 +1,32 @@
-FROM ghcr.io/astral-sh/uv:0.11.8-debian-slim
+# syntax=docker/dockerfile:1
+FROM golang:1.25.7-bookworm AS builder
 
-ENV PYTHONUNBUFFERED=1 \
-    UV_COMPILE_BYTECODE=1
+WORKDIR /src
 
-WORKDIR /app
+COPY go.mod go.sum ./
+RUN --mount=type=cache,target=/go/pkg/mod \
+    go mod download
 
-COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-dev --no-install-project
+COPY internal ./internal
+COPY cmd ./cmd
 
-COPY . .
-RUN uv sync --frozen --no-dev
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    --mount=type=cache,target=/go/pkg/mod \
+    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+    go build -trimpath -ldflags="-s -w" \
+    -o /out/build-class-change-notifications \
+    ./cmd/build-class-change-notifications
 
-CMD ["uv", "run", "--frozen", "--no-dev", "scrape-class-changes"]
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    --mount=type=cache,target=/go/pkg/mod \
+    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+    go build -trimpath -ldflags="-s -w" \
+    -o /out/dispatch-notifications \
+    ./cmd/dispatch-notifications
+
+FROM gcr.io/distroless/static-debian12:nonroot
+
+COPY --from=builder /out/build-class-change-notifications /bin/build-class-change-notifications
+COPY --from=builder /out/dispatch-notifications /bin/dispatch-notifications
+
+USER nonroot:nonroot
