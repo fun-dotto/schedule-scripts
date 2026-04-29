@@ -7,36 +7,63 @@ import (
 )
 
 type Notification struct {
-	ID           string    `gorm:"type:text;primaryKey"`
-	Title        string    `gorm:"type:text;not null"`
-	Message      string    `gorm:"type:text;not null"`
-	URL          *string   `gorm:"type:text"`
+	ID string `gorm:"type:text;primaryKey"`
+
+	Title                string  `gorm:"type:text;not null"`
+	Body                 string  `gorm:"type:text;not null"`
+	ImageURL             *string `gorm:"type:text"`
+	AnalyticsLabel       *string `gorm:"type:text"`
+	APNsBadge            *int    `gorm:"type:integer"`
+	APNsSound            *string `gorm:"type:text"`
+	APNsContentAvailable *bool   `gorm:"type:boolean"`
+	AndroidChannelID     *string `gorm:"type:text"`
+	AndroidPriority      *string `gorm:"type:text"`
+	AndroidTTLSeconds    *int    `gorm:"type:integer"`
+	WebpushLink          *string `gorm:"type:text"`
+
+	URL *string `gorm:"type:text"`
+
 	NotifyAfter  time.Time `gorm:"type:timestamptz;not null;index"`
 	NotifyBefore time.Time `gorm:"type:timestamptz;not null;index"`
-	IsNotified   bool      `gorm:"type:boolean;not null;default:false;index"`
 }
 
-func (n *Notification) ToDomain(targetUserIDs []string) domain.Notification {
+func (n *Notification) ToDomain(targetUsers []domain.NotificationTargetUser) domain.Notification {
 	return domain.Notification{
-		ID:            n.ID,
-		Title:         n.Title,
-		Message:       n.Message,
-		URL:           n.URL,
-		NotifyAfter:   n.NotifyAfter,
-		NotifyBefore:  n.NotifyBefore,
-		IsNotified:    n.IsNotified,
-		TargetUserIDs: targetUserIDs,
+		ID:                   n.ID,
+		Title:                n.Title,
+		Body:                 n.Body,
+		ImageURL:             n.ImageURL,
+		AnalyticsLabel:       n.AnalyticsLabel,
+		APNsBadge:            n.APNsBadge,
+		APNsSound:            n.APNsSound,
+		APNsContentAvailable: n.APNsContentAvailable,
+		AndroidChannelID:     n.AndroidChannelID,
+		AndroidPriority:      n.AndroidPriority,
+		AndroidTTLSeconds:    n.AndroidTTLSeconds,
+		WebpushLink:          n.WebpushLink,
+		URL:                  n.URL,
+		NotifyAfter:          n.NotifyAfter,
+		NotifyBefore:         n.NotifyBefore,
+		TargetUsers:          targetUsers,
 	}
 }
 
 func NotificationFromDomain(n domain.Notification) Notification {
 	return Notification{
-		ID:           n.ID,
-		Title:        n.Title,
-		Message:      n.Message,
-		URL:          n.URL,
-		NotifyAfter:  n.NotifyAfter,
-		NotifyBefore: n.NotifyBefore,
-		IsNotified:   n.IsNotified,
+		ID:                   n.ID,
+		Title:                n.Title,
+		Body:                 n.Body,
+		ImageURL:             n.ImageURL,
+		AnalyticsLabel:       n.AnalyticsLabel,
+		APNsBadge:            n.APNsBadge,
+		APNsSound:            n.APNsSound,
+		APNsContentAvailable: n.APNsContentAvailable,
+		AndroidChannelID:     n.AndroidChannelID,
+		AndroidPriority:      n.AndroidPriority,
+		AndroidTTLSeconds:    n.AndroidTTLSeconds,
+		WebpushLink:          n.WebpushLink,
+		URL:                  n.URL,
+		NotifyAfter:          n.NotifyAfter,
+		NotifyBefore:         n.NotifyBefore,
 	}
 }
