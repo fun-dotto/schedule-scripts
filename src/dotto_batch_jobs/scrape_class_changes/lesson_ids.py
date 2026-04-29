@@ -43,7 +43,8 @@ def load_name_maps(engine: Engine) -> tuple[dict[str, int], dict[str, int]]:
     normalized: dict[str, int] = {}
     sql = text(
         "SELECT syllabus_id, name FROM subjects "
-        "WHERE syllabus_id IS NOT NULL AND name IS NOT NULL"
+        "WHERE syllabus_id IS NOT NULL AND name IS NOT NULL "
+        "ORDER BY syllabus_id, name"
     )
     with engine.connect() as conn:
         rows = conn.execute(sql).all()
