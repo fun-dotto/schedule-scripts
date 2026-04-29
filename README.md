@@ -78,10 +78,12 @@ uv run scrape-class-changes
 ### 教員居室データの取り込み
 
 ```sh
-uv run insert-faculty-rooms
+uv run insert-faculty-rooms \
+  --faculties 2025=data/faculties_2025.csv \
+  --faculties 2026=data/faculties_2026.csv
 ```
 
-`faculties_{2025,2026}.csv` を読み、未一致の email / room_name があれば INSERT せず中断する。
+`--faculties YEAR=PATH` で年度ごとの CSV を指定する（複数指定可）。CSV は UTF-8 / ヘッダ行必須で、必須カラムは `name, email, room_name`。未一致の email / room_name があれば INSERT せず中断する。
 
 ### Go ジョブ
 
