@@ -96,7 +96,7 @@ def main() -> None:
             required_columns = ("email", "room_name")
             for year, path in sorted(csv_paths.items()):
                 try:
-                    f = open(path, encoding="utf-8-sig")
+                    f = open(path, encoding="utf-8-sig", newline="")
                 except FileNotFoundError:
                     print(f"中断: CSV が見つかりません: {path}", file=sys.stderr)
                     sys.exit(1)
