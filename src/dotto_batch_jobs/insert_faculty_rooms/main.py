@@ -95,7 +95,18 @@ def main() -> None:
 
             required_columns = ("email", "room_name")
             for year, path in sorted(csv_paths.items()):
-                with open(path, encoding="utf-8-sig") as f:
+                try:
+                    f = open(path, encoding="utf-8-sig")
+                except FileNotFoundError:
+                    print(f"中断: CSV が見つかりません: {path}", file=sys.stderr)
+                    sys.exit(1)
+                except PermissionError:
+                    print(f"中断: CSV を読み取れません（権限エラー）: {path}", file=sys.stderr)
+                    sys.exit(1)
+                except OSError as e:
+                    print(f"中断: CSV を開けません: {path} ({e})", file=sys.stderr)
+                    sys.exit(1)
+                with f:
                     reader = csv.DictReader(f)
                     missing = [c for c in required_columns if c not in (reader.fieldnames or [])]
                     if missing:
