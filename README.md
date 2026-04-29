@@ -11,7 +11,7 @@ Cloud Run Job + Cloud Scheduler 上で日次実行することを想定してい
 | 種別 | エントリポイント | 役割 |
 | --- | --- | --- |
 | Python | `scrape-class-changes`（`src/dotto_batch_jobs/scrape_class_changes/`） | ポータルから休講・補講・教室変更をスクレイピングし、`subjects` / `rooms` と突合して `cancelled_classes` / `makeup_classes` / `room_changes` テーブルへ UPSERT する。 |
-| Python | `insert-faculty-rooms`（`src/dotto_batch_jobs/insert_faculty_rooms/`） | `data/faculties_{year}.csv` を読み、`faculties.email` と `rooms.name` で照合して `faculty_rooms` を一括 INSERT する（年次運用ツール）。 |
+| Python | `insert-faculty-rooms`（`src/dotto_batch_jobs/insert_faculty_rooms/`） | `--faculties YEAR=PATH` で指定した年度ごとの CSV を読み、`faculties.email` と `rooms.name` で照合して `faculty_rooms` を一括 INSERT する（年次運用ツール）。 |
 | Go | `cmd/build-class-change-notifications` | 翌日の休講・補講・教室変更を DB から読み、履修者宛の `notifications` レコードを生成（UPSERT）する。 |
 | Go | `cmd/dispatch-notifications` | `notifications` の配信待ちを取得し、対象ユーザーの FCM トークン宛に Firebase Cloud Messaging で送信する。`-dry-run` フラグ対応。 |
 
