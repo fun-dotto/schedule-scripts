@@ -265,3 +265,6 @@ override.tf.json
 terraform.rc
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,go,terraform,python
+
+# Python プログラムの出力データ
+data/*.json
