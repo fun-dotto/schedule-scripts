@@ -95,7 +95,7 @@ def main() -> None:
 
             required_columns = ("email", "room_name")
             for year, path in sorted(csv_paths.items()):
-                with open(path, encoding="utf-8") as f:
+                with open(path, encoding="utf-8-sig") as f:
                     reader = csv.DictReader(f)
                     missing = [c for c in required_columns if c not in (reader.fieldnames or [])]
                     if missing:
