@@ -23,7 +23,7 @@ Cloud Run Job + Cloud Scheduler 上で日次実行することを想定してい
 │   ├── db/                          # SQLAlchemy モデル・エンジン・永続化（共有 DB レイヤ）
 │   ├── scrape_class_changes/        # スクレイピング + DB 保存（scrape-class-changes コマンド）
 │   └── insert_faculty_rooms/        # 教員居室の年次取り込み（insert-faculty-rooms コマンド）
-├── data/                            # CSV / JSON 入出力（classification_result.csv, faculties_*.csv, rooms.csv, *.json）
+├── data/                            # JSON 入出力（スクレイピング結果と必須項目欠落のスキップ一覧）
 ├── cmd/                             # Go バイナリのエントリポイント
 │   ├── build-class-change-notifications/
 │   └── dispatch-notifications/
