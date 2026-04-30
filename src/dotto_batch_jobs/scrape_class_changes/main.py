@@ -1,7 +1,9 @@
 import json
+import traceback
 from pathlib import Path
 
 from dotenv import load_dotenv
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from dotto_batch_jobs.db.engine import get_engine
@@ -14,7 +16,7 @@ from dotto_batch_jobs.db.persist_schedule import (
 )
 from dotto_batch_jobs.db.room_map import fill_room_ids_in_room_changes, load_room_name_to_id_map
 from dotto_batch_jobs.db.subject_map import fill_subject_ids_in_records, load_syllabus_to_subject_id_map
-from dotto_batch_jobs.scrape_class_changes.lesson_ids import default_classification_csv_path, fill_lesson_ids_in_records
+from dotto_batch_jobs.scrape_class_changes.lesson_ids import fill_lesson_ids_in_records, load_name_maps
 from dotto_batch_jobs.scrape_class_changes.scrapers.fetch import fetch_cancel_supple
 from dotto_batch_jobs.scrape_class_changes.scrapers.cancel_classes import cancelled_classes_to_dict
 from dotto_batch_jobs.scrape_class_changes.scrapers.room_change import room_change_to_dict
@@ -23,7 +25,7 @@ from dotto_batch_jobs.scrape_class_changes.scrapers.makeup_classes import makeup
 load_dotenv(override=False)
 
 ROOT = Path(__file__).resolve().parents[3]
-DATA_DIR = ROOT / "data"
+OUTPUT_DIR = ROOT / "output"
 
 
 def main() -> None:
@@ -32,25 +34,23 @@ def main() -> None:
     makeup_classes_json = [makeup_classes_to_dict(s) for s in makeup_classes_list]
     room_changes_json = [room_change_to_dict(c) for c in exchange_list]
 
-    csv_path = default_classification_csv_path(ROOT)
-    if csv_path.is_file():
-        r_k = fill_lesson_ids_in_records(cancelled_classes_json, csv_path)
-        r_s = fill_lesson_ids_in_records(makeup_classes_json, csv_path)
-        r_r = fill_lesson_ids_in_records(room_changes_json, csv_path)
-        print(
-            f"lessonId 照合（{csv_path.name}） 休講: {r_k.matched}/{r_k.total} 件, "
-            f"補講: {r_s.matched}/{r_s.total} 件, "
-            f"部屋変更: {r_r.matched}/{r_r.total} 件"
-        )
-    else:
-        print(
-            f"スキップ: {csv_path.name} が無いため lessonId は 0 のまま（休講・補講・部屋変更）",
-            flush=True,
-        )
-
     engine = None
     try:
         engine = get_engine()
+        try:
+            name_maps = load_name_maps(engine)
+            r_k = fill_lesson_ids_in_records(cancelled_classes_json, name_maps)
+            r_s = fill_lesson_ids_in_records(makeup_classes_json, name_maps)
+            r_r = fill_lesson_ids_in_records(room_changes_json, name_maps)
+            print(
+                f"lessonId 照合（subjects.name） 休講: {r_k.matched}/{r_k.total} 件, "
+                f"補講: {r_s.matched}/{r_s.total} 件, "
+                f"部屋変更: {r_r.matched}/{r_r.total} 件"
+            )
+        except SQLAlchemyError as e:
+            print(f"スキップ: lessonId 照合（DB エラー: {type(e).__name__}）", flush=True)
+            traceback.print_exc()
+
         syllabus_map = load_syllabus_to_subject_id_map(engine)
         sk = fill_subject_ids_in_records(cancelled_classes_json, syllabus_map)
         sm = fill_subject_ids_in_records(makeup_classes_json, syllabus_map)
@@ -84,7 +84,7 @@ def main() -> None:
     elig_makeup, skip_makeup = partition_cancelled_or_makeup(makeup_classes_json)
     elig_room, skip_room = partition_room_changes(room_changes_json)
 
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     skipped_specs = [
         ("cancelled_classes_skipped.json", skip_cancel),
@@ -92,7 +92,7 @@ def main() -> None:
         ("room_changes_skipped.json", skip_room),
     ]
     for fname, rows in skipped_specs:
-        with open(DATA_DIR / fname, "w", encoding="utf-8") as f:
+        with open(OUTPUT_DIR / fname, "w", encoding="utf-8") as f:
             json.dump(rows, f, ensure_ascii=False, indent=2)
 
     if engine is not None:
@@ -104,30 +104,30 @@ def main() -> None:
                 session.commit()
             print(
                 f"DB 休講: 新規 {pc.inserted} / 重複除外 {pc.duplicates} "
-                f"（必須不足 {len(skip_cancel)} 件 → data/cancelled_classes_skipped.json）"
+                f"（必須不足 {len(skip_cancel)} 件 → output/cancelled_classes_skipped.json）"
             )
             print(
                 f"DB 補講: 新規 {pm.inserted} / 重複除外 {pm.duplicates} "
-                f"（必須不足 {len(skip_makeup)} 件 → data/makeup_classes_skipped.json）"
+                f"（必須不足 {len(skip_makeup)} 件 → output/makeup_classes_skipped.json）"
             )
             print(
                 f"DB 部屋変更: 新規 {pr.inserted} / 重複除外 {pr.duplicates} "
-                f"（必須不足 {len(skip_room)} 件 → data/room_changes_skipped.json）"
+                f"（必須不足 {len(skip_room)} 件 → output/room_changes_skipped.json）"
             )
         except Exception as e:
             print(f"DB 保存エラー: {e}", flush=True)
         finally:
             engine.dispose()
 
-    with open(DATA_DIR / "cancelled_classes.json", "w", encoding="utf-8") as f:
+    with open(OUTPUT_DIR / "cancelled_classes.json", "w", encoding="utf-8") as f:
         json.dump(cancelled_classes_json, f, ensure_ascii=False, indent=2)
-    with open(DATA_DIR / "makeup_classes.json", "w", encoding="utf-8") as f:
+    with open(OUTPUT_DIR / "makeup_classes.json", "w", encoding="utf-8") as f:
         json.dump(makeup_classes_json, f, ensure_ascii=False, indent=2)
-    with open(DATA_DIR / "room_changes.json", "w", encoding="utf-8") as f:
+    with open(OUTPUT_DIR / "room_changes.json", "w", encoding="utf-8") as f:
         json.dump(room_changes_json, f, ensure_ascii=False, indent=2)
-    print(f"休講 {len(cancelled_classes_json)} 件 → data/cancelled_classes.json")
-    print(f"補講 {len(makeup_classes_json)} 件 → data/makeup_classes.json")
-    print(f"部屋変更 {len(room_changes_json)} 件 → data/room_changes.json")
+    print(f"休講 {len(cancelled_classes_json)} 件 → output/cancelled_classes.json")
+    print(f"補講 {len(makeup_classes_json)} 件 → output/makeup_classes.json")
+    print(f"部屋変更 {len(room_changes_json)} 件 → output/room_changes.json")
 
 
 if __name__ == "__main__":

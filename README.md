@@ -11,7 +11,7 @@ Cloud Run Job + Cloud Scheduler 上で日次実行することを想定してい
 | 種別 | エントリポイント | 役割 |
 | --- | --- | --- |
 | Python | `scrape-class-changes`（`src/dotto_batch_jobs/scrape_class_changes/`） | ポータルから休講・補講・教室変更をスクレイピングし、`subjects` / `rooms` と突合して `cancelled_classes` / `makeup_classes` / `room_changes` テーブルへ UPSERT する。 |
-| Python | `insert-faculty-rooms`（`src/dotto_batch_jobs/insert_faculty_rooms/`） | `data/faculties_{year}.csv` を読み、`faculties.email` と `rooms.name` で照合して `faculty_rooms` を一括 INSERT する（年次運用ツール）。 |
+| Python | `insert-faculty-rooms`（`src/dotto_batch_jobs/insert_faculty_rooms/`） | `--faculties YEAR=PATH` で指定した年度ごとの CSV を読み、`faculties.email` と `rooms.name` で照合して `faculty_rooms` を一括 INSERT する（年次運用ツール）。 |
 | Go | `cmd/build-class-change-notifications` | 翌日の休講・補講・教室変更を DB から読み、履修者宛の `notifications` レコードを生成（UPSERT）する。 |
 | Go | `cmd/dispatch-notifications` | `notifications` の配信待ちを取得し、対象ユーザーの FCM トークン宛に Firebase Cloud Messaging で送信する。`-dry-run` フラグ対応。 |
 
@@ -23,7 +23,7 @@ Cloud Run Job + Cloud Scheduler 上で日次実行することを想定してい
 │   ├── db/                          # SQLAlchemy モデル・エンジン・永続化（共有 DB レイヤ）
 │   ├── scrape_class_changes/        # スクレイピング + DB 保存（scrape-class-changes コマンド）
 │   └── insert_faculty_rooms/        # 教員居室の年次取り込み（insert-faculty-rooms コマンド）
-├── data/                            # CSV / JSON 入出力（classification_result.csv, faculties_*.csv, rooms.csv, *.json）
+├── output/                          # スクレイピング結果と必須項目欠落のスキップ一覧（git 管理外）
 ├── cmd/                             # Go バイナリのエントリポイント
 │   ├── build-class-change-notifications/
 │   └── dispatch-notifications/
@@ -72,17 +72,19 @@ uv sync
 uv run scrape-class-changes
 ```
 
-実行結果として `data/*.json`（取得結果と必須項目欠落のスキップ一覧）が出力される。
+実行結果として `output/*.json`（取得結果と必須項目欠落のスキップ一覧）が出力される。
 
 依存追加は `uv add <pkg>`、ロック更新は `uv lock --upgrade`。
 
 ### 教員居室データの取り込み
 
 ```sh
-uv run insert-faculty-rooms
+uv run insert-faculty-rooms \
+  --faculties 2025=<path-to-data-directory>/faculties_2025.csv \
+  --faculties 2026=<path-to-data-directory>/faculties_2026.csv
 ```
 
-`faculties_{2025,2026}.csv` を読み、未一致の email / room_name があれば INSERT せず中断する。
+`--faculties YEAR=PATH` で年度ごとの CSV を指定する（複数指定可）。CSV は UTF-8 / ヘッダ行必須で、必須カラムは `email, room_name`。必須カラムが欠けている場合および未一致の email / room_name がある場合は INSERT せず中断する。
 
 ### Go ジョブ
 

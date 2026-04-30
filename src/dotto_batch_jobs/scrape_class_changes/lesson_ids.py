@@ -1,14 +1,15 @@
-"""data/classification_result.csv と授業名を照合し、レコードの lessonId を埋める。"""
+"""subjects テーブルから (syllabus_id, name) を読み、授業名と照合してレコードの lessonId を埋める。"""
 
 from __future__ import annotations
 
-import csv
 import re
 import sys
 import unicodedata
 from dataclasses import dataclass, field
 from difflib import SequenceMatcher
-from pathlib import Path
+
+from sqlalchemy import text
+from sqlalchemy.engine import Engine
 
 # 曖昧一致: これ未満は採用しない
 FUZZY_MIN_RATIO = 0.88
@@ -32,48 +33,61 @@ def strip_legacy_annotation(s: str) -> str:
     return t.strip()
 
 
-def load_name_maps(csv_path: Path) -> tuple[dict[str, int], dict[str, int]]:
+def load_name_maps(engine: Engine) -> tuple[dict[str, int], dict[str, int]]:
     """
-    exact: CSV の name 原文 -> id（先勝ち）
-    normalized: normalize_for_match(name) -> id（先勝ち、重複 id は警告）
+    subjects テーブルの (syllabus_id, name) から:
+    exact: name 原文 -> syllabus_id（先勝ち）
+    normalized: normalize_for_match(name) -> syllabus_id（先勝ち、重複 id は警告）
     """
     exact: dict[str, int] = {}
     normalized: dict[str, int] = {}
-    with csv_path.open(newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            name = (row.get("name") or "").strip()
-            if not name:
-                continue
-            raw_id = row.get("id") or row.get("syllabus_id")
-            if raw_id is None or str(raw_id).strip() == "":
-                continue
-            sid = int(str(raw_id).strip())
+    sql = text(
+        "SELECT syllabus_id, name FROM subjects "
+        "WHERE syllabus_id IS NOT NULL AND name IS NOT NULL "
+        "ORDER BY syllabus_id, name"
+    )
+    with engine.connect() as conn:
+        rows = conn.execute(sql).all()
+    for row in rows:
+        raw_id = row.syllabus_id
+        if raw_id is None:
+            continue
+        try:
+            sid = int(raw_id)
+        except (TypeError, ValueError):
+            print(
+                f"警告: subjects.syllabus_id を int に変換できないためスキップ: {raw_id!r} (name={row.name!r})",
+                file=sys.stderr,
+            )
+            continue
+        name = (row.name or "").strip()
+        if not name:
+            continue
 
-            if name in exact:
-                if exact[name] != sid:
-                    print(
-                        f"警告: CSV で同一 name に複数 id（先勝ち {exact[name]}、無視 {sid}）: {name!r}",
-                        file=sys.stderr,
-                    )
-            else:
-                exact[name] = sid
+        if name in exact:
+            if exact[name] != sid:
+                print(
+                    f"警告: subjects で同一 name に複数 syllabus_id（先勝ち {exact[name]}、無視 {sid}）: {name!r}",
+                    file=sys.stderr,
+                )
+        else:
+            exact[name] = sid
 
-            key = normalize_for_match(name)
-            if key in normalized:
-                if normalized[key] != sid:
-                    print(
-                        f"警告: 正規化キーが衝突（先勝ち id={normalized[key]}、無視 id={sid}）: {key!r}",
-                        file=sys.stderr,
-                    )
-            else:
-                normalized[key] = sid
+        key = normalize_for_match(name)
+        if key in normalized:
+            if normalized[key] != sid:
+                print(
+                    f"警告: 正規化キーが衝突（先勝ち id={normalized[key]}、無視 id={sid}）: {key!r}",
+                    file=sys.stderr,
+                )
+        else:
+            normalized[key] = sid
 
     return exact, normalized
 
 
 def fuzzy_pick_id(query_norm: str, normalized: dict[str, int]) -> int | None:
-    """正規化済みクエリに最も近い CSV 側キー 1 件を選ぶ。自信がなければ None。"""
+    """正規化済みクエリに最も近い subjects 由来のキー 1 件を選ぶ。自信がなければ None。"""
     if not query_norm:
         return None
     best_key: str | None = None
@@ -139,7 +153,7 @@ class FillLessonIdsResult:
 
 def fill_lesson_ids_in_records(
     records: list[dict],
-    csv_path: Path,
+    name_maps: tuple[dict[str, int], dict[str, int]],
     *,
     use_fuzzy: bool = True,
     verbose: bool = False,
@@ -147,8 +161,9 @@ def fill_lesson_ids_in_records(
     """
     records を in-place で更新し、lessonName から lessonId を設定する。
     一致しない場合は lessonId を変更しない（取得時の 0 のまま）。
+    name_maps は load_name_maps の戻り値 (exact, normalized) を渡す。
     """
-    exact, normalized = load_name_maps(csv_path)
+    exact, normalized = name_maps
     matched = 0
     unmatched_names: list[str] = []
     kind_counts: dict[str, int] = {}
@@ -178,10 +193,3 @@ def fill_lesson_ids_in_records(
         kind_counts=kind_counts,
         unmatched_names=unmatched_names,
     )
-
-
-def default_classification_csv_path(root: Path | None = None) -> Path:
-    """data/classification_result.csv。"""
-    if root is None:
-        root = Path(__file__).resolve().parents[3]
-    return root / "data" / "classification_result.csv"

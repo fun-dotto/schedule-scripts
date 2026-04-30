@@ -1,4 +1,4 @@
-"""data/faculties_{year}.csv を読み faculty_rooms テーブルへ INSERT する。
+"""faculties CSV を読み faculty_rooms テーブルへ INSERT する。
 
 - email -> faculties.id, room_name -> rooms.name で照合
 - room_name 空欄の行はスキップ
@@ -8,6 +8,7 @@
 
 from __future__ import annotations
 
+import argparse
 import csv
 import sys
 import uuid
@@ -21,17 +22,59 @@ from dotto_batch_jobs.db.engine import get_engine
 from dotto_batch_jobs.db.models import Faculty, FacultyRoom
 from dotto_batch_jobs.db.room_map import load_room_name_to_id_map, normalize_room_name
 
-ROOT = Path(__file__).resolve().parents[3]
-CSV_DIR = ROOT / "data"
-YEARS = (2025, 2026)
-
 
 def _norm_email(s: str) -> str:
     return s.strip().lower()
 
 
+def _parse_faculties(value: str) -> tuple[int, Path]:
+    if "=" not in value:
+        raise argparse.ArgumentTypeError(
+            f"--faculties は YEAR=PATH 形式で指定してください: {value!r}"
+        )
+    year_str, path_str = value.split("=", 1)
+    try:
+        year = int(year_str)
+    except ValueError as e:
+        raise argparse.ArgumentTypeError(f"年度は整数で指定してください: {year_str!r}") from e
+    if not path_str:
+        raise argparse.ArgumentTypeError(f"PATH が空です: {value!r}")
+    return year, Path(path_str)
+
+
+def _parse_args() -> dict[int, Path]:
+    parser = argparse.ArgumentParser(
+        description=(
+            "faculties CSV を読み faculty_rooms テーブルへ INSERT する。"
+            " CSV は UTF-8 / ヘッダ行必須、必須カラムは email, room_name。"
+            " email は faculties.email、room_name は rooms.name と照合する。"
+            " room_name 空欄行はスキップ。"
+        )
+    )
+    parser.add_argument(
+        "--faculties",
+        action="append",
+        required=True,
+        type=_parse_faculties,
+        metavar="YEAR=PATH",
+        help=(
+            "年度と CSV パスのペア（例: --faculties 2025=<path-to-data-directory>/faculties_2025.csv）。"
+            " 複数年度を取り込む場合は本オプションを複数回指定する。"
+            " CSV 必須カラム: email, room_name"
+        ),
+    )
+    args = parser.parse_args()
+    csv_paths: dict[int, Path] = {}
+    for year, path in args.faculties:
+        if year in csv_paths:
+            parser.error(f"年度 {year} が複数回指定されています")
+        csv_paths[year] = path
+    return csv_paths
+
+
 def main() -> None:
     load_dotenv(override=False)
+    csv_paths = _parse_args()
     engine = get_engine()
     try:
         name_to_room_id = load_room_name_to_id_map(engine)
@@ -50,10 +93,28 @@ def main() -> None:
             unmatched_rooms: set[str] = set()
             skipped_blank = 0
 
-            for year in YEARS:
-                path = CSV_DIR / f"faculties_{year}.csv"
-                with open(path, encoding="utf-8") as f:
+            required_columns = ("email", "room_name")
+            for year, path in sorted(csv_paths.items()):
+                try:
+                    f = open(path, encoding="utf-8-sig", newline="")
+                except FileNotFoundError:
+                    print(f"中断: CSV が見つかりません: {path}", file=sys.stderr)
+                    sys.exit(1)
+                except PermissionError:
+                    print(f"中断: CSV を読み取れません（権限エラー）: {path}", file=sys.stderr)
+                    sys.exit(1)
+                except OSError as e:
+                    print(f"中断: CSV を開けません: {path} ({e})", file=sys.stderr)
+                    sys.exit(1)
+                with f:
                     reader = csv.DictReader(f)
+                    missing = [c for c in required_columns if c not in (reader.fieldnames or [])]
+                    if missing:
+                        print(
+                            f"中断: {path} に必須カラムがありません: {missing}",
+                            file=sys.stderr,
+                        )
+                        sys.exit(1)
                     for row in reader:
                         room_name = (row.get("room_name") or "").strip()
                         if not room_name:
